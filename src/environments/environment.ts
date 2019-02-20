@@ -6,6 +6,15 @@ export const environment = {
   production: false
 };
 
+export const firebaseConfig = {
+  apiKey: 'AIzaSyBbID8gNsDwxWVwWT4zxn2HfE_FHu7PeQs',
+  authDomain: 'sena-app-11840.firebaseapp.com',
+  databaseURL: 'https://sena-app-11840.firebaseio.com',
+  projectId: 'sena-app-11840',
+  storageBucket: '',
+  messagingSenderId: '246001293386'
+};
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

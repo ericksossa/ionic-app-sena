@@ -8,6 +8,10 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+// firebase
+import { AngularFireModule } from '@angular/fire';
+// environment
+import { firebaseConfig } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -15,7 +19,11 @@ import { AppRoutingModule } from './app-routing.module';
 
   ],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    AngularFireModule.initializeApp(firebaseConfig)
+  ],
   providers: [
     StatusBar,
     SplashScreen,
