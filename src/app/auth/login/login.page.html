@@ -7,24 +7,48 @@
     </ion-row>
     <ion-row>
       <ion-col class="top-60">
-        <ion-list >
-          <ion-item >
-            <!-- inputs -->
-            <ion-label position="floating">Email Address</ion-label>
-            <ion-input type="text"></ion-input>
-          </ion-item>
+        <form [formGroup]="loginForm">
           <ion-item>
-            <ion-label position="floating">Password</ion-label>
-            <ion-input type="password"></ion-input>
+            <!-- inputs -->
+            <ion-label position="floating">
+              <ion-icon name="at" item-start class="text-primary"></ion-icon>
+              Email Address
+            </ion-label>
+            <ion-input formControlName="email" name="email" type="text"></ion-input>
+          </ion-item>
+          <div class="error-messages">
+            <ng-container *ngFor="let error of errorMessages.email">
+              <div class="error-messages" *ngIf="loginForm.get('email').hasError(error.type) && (loginForm.get('email').dirty || loginForm.get('email').touched) ">
+                {{error.message}}
+              </div>
+            </ng-container>
+          </div>
+
+          <ion-item>
+            <ion-label position="floating">
+              <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+              Password
+            </ion-label>
+            <ion-input formControlName="password" name="password" type="password"></ion-input>
             <!-- /inputs -->
           </ion-item>
-        </ion-list>
+
+          <div class="error-messages">
+            <ng-container *ngFor="let error of errorMessages.password">
+              <div class="error-messages" *ngIf="loginForm.get('password').hasError(error.type) && (loginForm.get('password').dirty || loginForm.get('password').touched) ">
+                {{error.message}}
+              </div>
+            </ng-container>
+          </div>
+
+          <ion-button (click)="onSubmit()" [disabled]="!loginForm.valid" color="primary" expand="block"> SIGN IN</ion-button>
+        </form>
+
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col class="top-5">
         <!-- buttons -->
-        <ion-button color="primary" expand="block"> SIGN IN</ion-button>
         <p>
           Sign in With Social Account
         </p>
@@ -39,7 +63,7 @@
     </ion-row>
     <p>
       Don't have an account?
-      <ion-button color="default" routerLink="/register"> SIGN UP</ion-button>
+      <a class="text-danger" routerLink="/register"> SIGN UP</a>
     </p>
   </ion-grid>
 </ion-content>

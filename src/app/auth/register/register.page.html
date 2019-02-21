@@ -14,38 +14,65 @@
     </ion-row>
     <ion-row>
       <ion-col class="top-60">
-        <!-- inputs -->
-        <ion-item>
-          <ion-label position="floating">Email Address</ion-label>
-          <ion-input type="text"></ion-input>
-        </ion-item>
+        <form [formGroup]="registerForm">
+          <!-- inputs -->
+          <ion-item>
+            <ion-label position="floating">Email Address</ion-label>
+            <ion-input formControlName="email" name="email" type="text"></ion-input>
+          </ion-item>
+          <div class="error-messages">
+            <ng-container *ngFor="let error of errorMessages.email">
+              <div class="error-messages" *ngIf="registerForm.get('email').hasError(error.type) && (registerForm.get('email').dirty || registerForm.get('email').touched) ">
+                {{error.message}}
+              </div>
+            </ng-container>
+          </div>
 
-        <ion-item>
-          <ion-label position="floating">Name</ion-label>
-          <ion-input type="text"></ion-input>
-        </ion-item>
+          <ion-item>
+            <ion-label position="floating">Name</ion-label>
+            <ion-input formControlName="name" name="name" type="text" autocapitalize></ion-input>
+          </ion-item>
+          <div class="error-messages">
+            <ng-container *ngFor="let error of errorMessages.name">
+              <div class="error-messages" *ngIf="registerForm.get('name').hasError(error.type) && (registerForm.get('name').dirty || registerForm.get('name').touched) ">
+                {{error.message}}
+              </div>
+            </ng-container>
+          </div>
 
-        <ion-item>
-          <ion-label position="floating">Password</ion-label>
-          <ion-input type="password"></ion-input>
-        </ion-item>
-         <!-- /inputs -->
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input formControlName="password" name="password" type="password"></ion-input>
+          </ion-item>
+
+          <div class="error-messages">
+            <ng-container *ngFor="let error of errorMessages.password">
+              <div class="error-messages" *ngIf="registerForm.get('password').hasError(error.type) && (registerForm.get('password').dirty || registerForm.get('password').touched) ">
+                {{error.message}}
+              </div>
+            </ng-container>
+          </div>
+
+          <!-- /inputs -->
+
+          <ion-button (click)="onSubmit()" expand="block" color="primary">
+            SIGN IN
+          </ion-button>
+
+        </form>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col class="top-5">
         <!-- buttons -->
-        <ion-button expand="block" color="primary">
-          SIGN IN
-        </ion-button>
         <p>
           Sign in With Social Account
         </p>
-        <ion-button  color="facebook">
+        <ion-button color="facebook">
           <ion-icon name="logo-facebook"></ion-icon>
         </ion-button>
-        <ion-button  color="google">
+        <ion-button color="google">
           <ion-icon name="logo-googleplus"></ion-icon>
         </ion-button>
         <!-- /buttons -->
@@ -53,7 +80,7 @@
     </ion-row>
     <p>
       Already have an account?
-      <ion-button routerLink="/login" color="primary">SIGN IN</ion-button>
+      <a routerLink="/login" color="primary">SIGN IN</a>
     </p>
   </ion-grid>
 </ion-content>
