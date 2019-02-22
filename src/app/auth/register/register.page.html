@@ -55,7 +55,7 @@
 
           <!-- /inputs -->
 
-          <ion-button (click)="onSubmit()" expand="block" color="primary">
+          <ion-button [disabled]="!registerForm.valid" (click)="onSubmit()" expand="block" color="primary">
             SIGN IN
           </ion-button>
 

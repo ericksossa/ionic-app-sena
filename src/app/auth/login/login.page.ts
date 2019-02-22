@@ -54,9 +54,13 @@ export class LoginPage implements OnInit {
   }
 
   onSubmit() {
+    if (!this.loginForm.valid) {
+      return;
+    }
+
     this.authService.signUp(this.loginForm.value.email, this.loginForm.value.password)
       .then(resp => {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/tabs']);
       }).
       catch(err => console.log(err));
 
