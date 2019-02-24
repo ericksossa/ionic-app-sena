@@ -13,7 +13,7 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private afDB: AngularFirestore) { }
-
+  // login
   signUp(email: string, password: string) {
     return new Promise((resolve, rejected) => {
       this.afAuth.auth.
@@ -23,7 +23,7 @@ export class AuthService {
     });
 
   }
-
+  // register
   signIn(nombre: string, email: string, password: string) {
 
     // this.store.dispatch(new ActivarLoadingAction());

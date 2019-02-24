@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { AlertController, ToastController, LoadingController } from '@ionic/angular';
 
 
 @Component({
@@ -29,7 +30,9 @@ export class LoginPage implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router) {
+    private router: Router,
+    public loadingController: LoadingController,
+    public toastController: ToastController) {
     this.createFormsControl();
   }
 
@@ -60,10 +63,34 @@ export class LoginPage implements OnInit {
 
     this.authService.signUp(this.loginForm.value.email, this.loginForm.value.password)
       .then(resp => {
+        // bien
+        this.presentLoading();
         this.router.navigate(['/tabs']);
       }).
-      catch(err => console.log(err));
+      // err
+      catch(err => this.showError('Error: ' + err.message));
 
   }
 
+  async showError(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2500,
+      color: 'danger'
+    });
+    toast.present();
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      spinner: 'crescent',
+      duration: 5000,
+      message: 'Please wait...',
+      translucent: true,
+      cssClass: 'custom-class custom-loading'
+    });
+    return await loading.present();
+  }
 }
+
+
