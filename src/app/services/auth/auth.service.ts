@@ -3,6 +3,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { User } from '../../auth/user.model';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import { ActivateLoadingAction } from '../../auth/ui.actions';
 
 
 @Injectable({
@@ -12,9 +15,11 @@ export class AuthService {
 
   constructor(
     private afAuth: AngularFireAuth,
-    private afDB: AngularFirestore) { }
+    private afDB: AngularFirestore,
+    private store: Store<AppState>) { }
   // login
   signUp(email: string, password: string) {
+    this.store.dispatch(new ActivateLoadingAction());
     return new Promise((resolve, rejected) => {
       this.afAuth.auth.
         signInWithEmailAndPassword(email, password).then(

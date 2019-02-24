@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { AlertController, ToastController, LoadingController } from '@ionic/angular';
+import { ToastController, LoadingController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../app.reducer';
+import { DesactivateLoadingAction } from '../ui.actions';
 
 
 @Component({
@@ -10,7 +14,7 @@ import { AlertController, ToastController, LoadingController } from '@ionic/angu
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements OnInit, OnDestroy {
   errorMessages = {
     'email': [
       { type: 'required', message: 'Email is required.' },
@@ -27,16 +31,25 @@ export class LoginPage implements OnInit {
     ]
   };
   loginForm: FormGroup;
+  subscription: Subscription;
+  loading: boolean;
   constructor(
     public formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
     public loadingController: LoadingController,
-    public toastController: ToastController) {
+    public toastController: ToastController,
+    private store: Store<AppState>) {
     this.createFormsControl();
   }
 
   ngOnInit() {
+    this.subscription = this.store.select('ui')
+      .subscribe(ui => this.loading = ui.isLoading);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   createFormsControl() {
@@ -64,11 +77,19 @@ export class LoginPage implements OnInit {
     this.authService.signUp(this.loginForm.value.email, this.loginForm.value.password)
       .then(resp => {
         // bien
-        this.presentLoading();
-        this.router.navigate(['/tabs']);
+        if (this.loading) {
+          this.store.dispatch(new DesactivateLoadingAction());
+          this.presentLoading();
+        } else {
+          console.log(this.loading);
+          this.router.navigate(['/tabs']);
+        }
       }).
       // err
-      catch(err => this.showError('Error: ' + err.message));
+      catch(err => {
+        this.showError('Error: ' + err.message);
+        this.store.dispatch(new DesactivateLoadingAction());
+      });
 
   }
 
@@ -84,7 +105,7 @@ export class LoginPage implements OnInit {
   async presentLoading() {
     const loading = await this.loadingController.create({
       spinner: 'crescent',
-      duration: 5000,
+      duration: 1000,
       message: 'Please wait...',
       translucent: true,
       cssClass: 'custom-class custom-loading'

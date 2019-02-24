@@ -3,17 +3,18 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyBbID8gNsDwxWVwWT4zxn2HfE_FHu7PeQs',
+    authDomain: 'sena-app-11840.firebaseapp.com',
+    databaseURL: 'https://sena-app-11840.firebaseio.com',
+    projectId: 'sena-app-11840',
+    storageBucket: '',
+    messagingSenderId: '246001293386'
+  }
 };
 
-export const firebaseConfig = {
-  apiKey: 'AIzaSyBbID8gNsDwxWVwWT4zxn2HfE_FHu7PeQs',
-  authDomain: 'sena-app-11840.firebaseapp.com',
-  databaseURL: 'https://sena-app-11840.firebaseio.com',
-  projectId: 'sena-app-11840',
-  storageBucket: '',
-  messagingSenderId: '246001293386'
-};
+
 
 /*
  * For easier debugging in development mode, you can import the following file
