@@ -6,4 +6,59 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content padding>
+  <ion-row>
+    <ion-col>
+
+
+      <img class="pic_profile"  src="../../assets/inicio/av1.jpg">
+
+
+    </ion-col>
+
+    <ion-col>
+      <h1>Jhon Doe</h1>
+      <ion-button  (click)="editPerfil()">Editar perfil</ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <h6>Medellin,colombia</h6>
+  </ion-row>
+  <ion-row>
+    <h6>cali,colombia</h6>
+  </ion-row>
+  <ion-row>
+    <h3>Mi descripcion</h3>
+    <p>Siga las pautas a continuación para obtener
+       más detalles sobre el almacenamiento seguro y no seguro del 
+       nombre de usuario y las contraseñas:</p>
+       <ion-button round outline (click)="takePhoto()">
+          Add to activity
+        </ion-button>
+  </ion-row>
+  <ion-card>
+
+      <ion-item>
+        <p>November 5, 1955</p>
+      </ion-item>
+  
+      <img src="../../assets/inicio/img1.jpg">
+  
+      <ion-card-content>
+        <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a
+          DeLorean?! Whoa. This is heavy.</p>
+      </ion-card-content>
+  
+      <ion-row>
+       
+        <ion-col left>
+          <ion-note >
+            11h ago
+          </ion-note>
+        </ion-col>
+      </ion-row>
+  
+    </ion-card>
+
+
+</ion-content>
