@@ -69,7 +69,7 @@ export class LoginPage implements OnInit, OnDestroy {
     });
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (!this.loginForm.valid) {
       return;
     }
@@ -77,13 +77,15 @@ export class LoginPage implements OnInit, OnDestroy {
     this.authService.signUp(this.loginForm.value.email, this.loginForm.value.password)
       .then(resp => {
         // bien
-        if (this.loading) {
-          this.store.dispatch(new DesactivateLoadingAction());
+        if (resp) {
           this.presentLoading();
-        } else {
-          console.log(this.loading);
-          this.router.navigate(['/tabs']);
         }
+
+        this.store.dispatch(new DesactivateLoadingAction());
+        if (!this.loading) {
+          this.router.navigateByUrl('/tabs/home');
+        }
+
       }).
       // err
       catch(err => {
@@ -93,10 +95,11 @@ export class LoginPage implements OnInit, OnDestroy {
 
   }
 
+
   async showError(message: string) {
     const toast = await this.toastController.create({
       message: message,
-      duration: 2500,
+      duration: 1000,
       color: 'danger'
     });
     toast.present();
@@ -105,7 +108,7 @@ export class LoginPage implements OnInit, OnDestroy {
   async presentLoading() {
     const loading = await this.loadingController.create({
       spinner: 'crescent',
-      duration: 1000,
+      duration: 500,
       message: 'Please wait...',
       translucent: true,
       cssClass: 'custom-class custom-loading'

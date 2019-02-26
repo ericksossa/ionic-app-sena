@@ -6,8 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { TabsPageRoutingModule } from './tabs.router.module';
 
 import { TabsPage } from './tabs.page';
-import { ProfilePageModule } from '../profile/profile.module';
 import { HomePageModule } from '../home/home.module';
+import { ProfilePageModule } from '../profile/profile.module';
 import { ChatPageModule } from '../chat/chat.module';
 
 @NgModule({
@@ -15,10 +15,10 @@ import { ChatPageModule } from '../chat/chat.module';
     IonicModule,
     CommonModule,
     FormsModule,
+    TabsPageRoutingModule,
     HomePageModule,
     ProfilePageModule,
-    ChatPageModule,
-    TabsPageRoutingModule
+    ChatPageModule
   ],
   declarations: [TabsPage]
 })

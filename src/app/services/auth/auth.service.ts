@@ -6,6 +6,7 @@ import { User } from '../../auth/user.model';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { ActivateLoadingAction } from '../../auth/ui.actions';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -16,7 +17,8 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private afDB: AngularFirestore,
-    private store: Store<AppState>) { }
+    private store: Store<AppState>,
+    private router: Router) { }
   // login
   signUp(email: string, password: string) {
     this.store.dispatch(new ActivateLoadingAction());
@@ -54,6 +56,12 @@ export class AuthService {
         // Swal.fire('Error en el login', error.message, 'error');
 
       });
+  }
+
+  logout() {
+    this.router.navigate(['/login']);
+    this.afAuth.auth.signOut();
+    // this.store.dispatch(new UnSetUserAction());
   }
 
 

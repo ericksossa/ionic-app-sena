@@ -1,25 +1,16 @@
+import { IonicModule } from '@ionic/angular';
+import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
-
-import { IonicModule } from '@ionic/angular';
-
 import { ProfilePage } from './profile.page';
-
-const routes: Routes = [
-  {
-    path: '',
-    component: ProfilePage
-  }
-];
 
 @NgModule({
   imports: [
+    IonicModule,
     CommonModule,
     FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild([{ path: '', component: ProfilePage }])
   ],
   declarations: [ProfilePage]
 })

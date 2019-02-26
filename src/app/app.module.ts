@@ -30,7 +30,8 @@ import { AuthService } from './services/auth/auth.service';
 
   ],
   entryComponents: [],
-  imports: [BrowserModule,
+  imports: [
+    BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     StoreModule.forRoot(appReducers),
