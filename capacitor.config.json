@@ -1,0 +1,6 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "senaApp",
+  "bundledWebRuntime": false,
+  "webDir": "www"
+}
