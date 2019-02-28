@@ -1,5 +1,7 @@
 {
   "name": "senaApp",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
