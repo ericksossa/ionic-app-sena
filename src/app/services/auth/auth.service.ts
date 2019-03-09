@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { ActivateLoadingAction } from '../../auth/ui.actions';
 import { Router } from '@angular/router';
-
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +62,19 @@ export class AuthService {
     this.router.navigate(['/login']);
     this.afAuth.auth.signOut();
     // this.store.dispatch(new UnSetUserAction());
+  }
+
+  isAuth() {
+    return this.afAuth.authState
+      .pipe(
+        map(fbUser => {
+          if (fbUser == null) {
+            this.router.navigate(['/login']);
+          }
+
+          return fbUser != null;
+        })
+      );
   }
 
 
