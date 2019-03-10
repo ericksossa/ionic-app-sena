@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ChatDetailsComponent } from 'src/app/components/modals/chat-details/chat-details.component';
+import { ChatDetailsPage } from 'src/app/components/modals/chat-details/chat-details.page';
 
 @Component({
   selector: 'app-chat',
@@ -13,7 +13,7 @@ export class ChatPage {
 
   openChat() {
     this.modalController
-      .create({ component: ChatDetailsComponent })
+      .create({ component: ChatDetailsPage })
       .then((modal) => modal.present());
 
   }

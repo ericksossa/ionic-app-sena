@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ModalController } from '@ionic/angular';
 import { NewPostPage } from '../new-post/new-post.page';
+import { EditProfileComponent } from 'src/app/components/modals/edit-profile/edit-profile.component';
 
+declare var window: any;
 @Component({
   selector: 'app-profile',
   templateUrl: 'profile.page.html',
@@ -13,7 +15,7 @@ export class ProfilePage {
     private camera: Camera,
     private modalController: ModalController) { }
 
-  async takePhoto() {
+  takePhoto() {
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -25,8 +27,10 @@ export class ProfilePage {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
-      const base64Image = 'data:image/jpeg;base64,' + imageData;
-      if (base64Image) {
+      const img = window.Ionic.WebView.convertFileSrc(imageData);
+      console.log(img);
+
+      if (img) {
         // this.presentModal(base64Image);
       }
 
@@ -45,8 +49,8 @@ export class ProfilePage {
   //   return await modal.present();
   // }
 
-  editPerfil() {
-    // this.modalController
-    //   .create({ component: EditProfilePage }).then((modal) => modal.present());
+  editProfile() {
+    this.modalController
+      .create({ component: EditProfileComponent }).then((modal) => modal.present());
   }
 }

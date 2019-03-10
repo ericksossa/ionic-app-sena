@@ -108,7 +108,7 @@ export class LoginPage implements OnInit, OnDestroy {
   async presentLoading() {
     const loading = await this.loadingController.create({
       spinner: 'crescent',
-      duration: 500,
+      duration: 50,
       message: 'Please wait...',
       translucent: true,
       cssClass: 'custom-class custom-loading'

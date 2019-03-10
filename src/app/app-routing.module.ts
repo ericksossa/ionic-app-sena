@@ -9,7 +9,8 @@ const routes: Routes = [
   {
     path: '', loadChildren: './pages/tabs/tabs.module#TabsPageModule',
     canActivate: [AuthGuard]
-  } // <--importante
+  }, // <--importante
+  // { path: 'chat-details', loadChildren: './components/modals/chat-details/chat-details.module#ChatDetailsPageModule' }
 
 ];
 @NgModule({
