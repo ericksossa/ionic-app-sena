@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 // modals-component
 import { ChatDetailsPage } from './chat-details/chat-details.page';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { NewPostComponent } from './new-post/new-post.component';
 
 
 
@@ -17,7 +18,8 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
   ],
   declarations: [
     ChatDetailsPage,
-    EditProfileComponent],
+    EditProfileComponent,
+    NewPostComponent],
   exports: [
     ChatDetailsPage,
     EditProfileComponent]

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'app-chat-details',
@@ -9,9 +9,13 @@ import { ModalController } from '@ionic/angular';
 export class ChatDetailsPage implements OnInit {
   showEmojiPicker = false;
   editorMsg = '';
-  constructor(private modalController: ModalController) { }
+  name: string;
+  constructor(
+    private modalController: ModalController,
+    private navParams: NavParams) { }
 
   ngOnInit() {
+    this.name = this.navParams.get('name');
   }
 
   switchEmojiPicker() { }

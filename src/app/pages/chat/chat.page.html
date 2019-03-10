@@ -7,27 +7,27 @@
 </ion-header>
 
 <ion-content>
-    <!-- primer chat -->
-    <ion-list>
-      <ion-item (click)="openChat()">
-        <ion-avatar slot="start">
-          <img src="../../assets/inicio/av1.jpg">
-        </ion-avatar>
-        <ion-label >Mbappe
-          <p>Ugh. As if.</p>
-        </ion-label>
-        
-      </ion-item>
-  
-      <!-- segundo Chat -->
-      <ion-item>
-        <ion-avatar slot="start">
-          <img src="../../assets/inicio/av2.jpeg">
-        </ion-avatar>
-        <ion-label >Mac
-          <p >Ugh. As if.</p>
-        </ion-label>
-        
-      </ion-item>
-    </ion-list>
+  <!-- primer chat -->
+  <ion-list>
+    <ion-item (click)="openChat(name)">
+      <ion-avatar slot="start">
+        <img src="../../assets/inicio/av1.jpg">
+      </ion-avatar>
+      <ion-label>{{name}}
+        <p>Ugh. As if.</p>
+      </ion-label>
+
+    </ion-item>
+
+    <!-- segundo Chat -->
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="../../assets/inicio/av2.jpeg">
+      </ion-avatar>
+      <ion-label>Mac
+        <p>Ugh. As if.</p>
+      </ion-label>
+
+    </ion-item>
+  </ion-list>
 </ion-content>

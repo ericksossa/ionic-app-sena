@@ -21,7 +21,7 @@ import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/fi
 // environment
 import { environment } from '../environments/environment';
 // service
-import { AuthService } from './services/auth/auth.service';
+import { ServicesModule } from './services/services.module';
 
 
 @NgModule({
@@ -39,12 +39,12 @@ import { AuthService } from './services/auth/auth.service';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    ServicesModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Camera,
-    AuthService,
     { provide: FirestoreSettingsToken, useValue: {} },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
