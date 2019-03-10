@@ -9,15 +9,7 @@ const routes: Routes = [
   {
     path: '', loadChildren: './pages/tabs/tabs.module#TabsPageModule',
     canActivate: [AuthGuard]
-  }, // <--importante
-  {
-    path: 'new-post', loadChildren: './pages/new-post/new-post.module#NewPostPageModule',
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'edit-profile', loadChildren: './pages/edit-profile/edit-profile.module#EditProfilePageModule',
-    canActivate: [AuthGuard]
-  }
+  } // <--importante
 
 ];
 @NgModule({

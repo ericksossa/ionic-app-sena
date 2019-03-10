@@ -22,13 +22,16 @@ import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/fi
 import { environment } from '../environments/environment';
 // service
 import { AuthService } from './services/auth/auth.service';
+// modals-component
+import { ChatDetailsComponent } from './components/modals/chat-details/chat-details.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ChatDetailsComponent
 
   ],
-  entryComponents: [],
+  entryComponents: [ChatDetailsComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

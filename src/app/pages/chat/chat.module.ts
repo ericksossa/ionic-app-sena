@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ChatPage} from './chat.page';
+import { ChatPage } from './chat.page';
 
 @NgModule({
   imports: [
@@ -14,4 +14,4 @@ import { ChatPage} from './chat.page';
   ],
   declarations: [ChatPage]
 })
-export class ChatPageModule {}
+export class ChatPageModule { }

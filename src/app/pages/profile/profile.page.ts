@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ModalController } from '@ionic/angular';
 import { NewPostPage } from '../new-post/new-post.page';
-import { EditProfilePage } from '../edit-profile/edit-profile.page';
 
 @Component({
   selector: 'app-profile',
@@ -47,7 +46,7 @@ export class ProfilePage {
   // }
 
   editPerfil() {
-    this.modalController
-      .create({ component: EditProfilePage }).then((modal) => modal.present());
+    // this.modalController
+    //   .create({ component: EditProfilePage }).then((modal) => modal.present());
   }
 }

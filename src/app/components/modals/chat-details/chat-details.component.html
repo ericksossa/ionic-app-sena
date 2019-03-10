@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref></ion-back-button>
+    </ion-buttons>
+    <ion-title>Usuario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="message-wrap">
+
+    <div>
+      <img class="user-img">
+      <!-- <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner> -->
+      <div class="msg-detail">
+        <div class="msg-info">
+          <p>
+            &nbsp;&nbsp;&nbsp;</p>
+        </div>
+        <div class="msg-content">
+          <span class="triangle"></span>
+          <p class="line-breaker "></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>
+
+<ion-footer no-border [style.height]="showEmojiPicker ? '255px' : '55px'">
+  <div class="input-wrap">
+
+    <ion-button slot="start" fill="outline" (click)="switchEmojiPicker()">
+      <ion-icon name="md-happy"></ion-icon>
+    </ion-button>
+    <ion-textarea>
+    </ion-textarea>
+    <ion-button fill="outline" (click)="sendMsg()">
+      <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+    </ion-button>
+  </div>
+  <!-- <emoji-picker [(ngModel)]="editorMsg"></emoji-picker> -->
+</ion-footer>

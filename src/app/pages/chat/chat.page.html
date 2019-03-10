@@ -9,8 +9,8 @@
 <ion-content>
     <!-- primer chat -->
     <ion-list>
-      <ion-item>
-        <ion-avatar item-start>
+      <ion-item (click)="openChat()">
+        <ion-avatar slot="start">
           <img src="../../assets/inicio/av1.jpg">
         </ion-avatar>
         <ion-label >Mbappe
@@ -20,10 +20,8 @@
       </ion-item>
   
       <!-- segundo Chat -->
-  
-  
       <ion-item>
-        <ion-avatar item-start>
+        <ion-avatar slot="start">
           <img src="../../assets/inicio/av2.jpeg">
         </ion-avatar>
         <ion-label >Mac
