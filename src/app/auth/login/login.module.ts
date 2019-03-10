@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { LoginPage } from './login.page';
 
+import { Facebook } from '@ionic-native/facebook/ngx';
+
 const routes: Routes = [
   {
     path: '',
@@ -22,6 +24,9 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [LoginPage]
+  declarations: [LoginPage],
+  providers: [
+    Facebook
+  ]
 })
 export class LoginPageModule {}

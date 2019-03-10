@@ -2,11 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { ToastController, LoadingController } from '@ionic/angular';
+import { ToastController, LoadingController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.reducer';
 import { DesactivateLoadingAction } from '../ui.actions';
+import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from 'firebase/app';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
+
 
 
 @Component({
@@ -34,6 +38,9 @@ export class LoginPage implements OnInit, OnDestroy {
   subscription: Subscription;
   loading: boolean;
   constructor(
+    private fb: Facebook,
+    private platform: Platform,
+    private afAuth: AngularFireAuth,
     public formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
@@ -67,6 +74,29 @@ export class LoginPage implements OnInit, OnDestroy {
         Validators.maxLength(50),
       ]))
     });
+  }
+
+  signInWithFacebook() {
+    if (this.platform.is('cordova')) {
+      // celular
+      this.fb.login(['email', 'public_profile']).then(res => {
+        const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
+        firebase.auth().signInWithCredential(facebookCredential)
+          .then(user => {
+            console.log(user);
+            if (user) {
+
+              this.router.navigateByUrl('/tabs/home');
+            }
+          }).catch(e => console.error(JSON.stringify(e)));
+      });
+
+    } else {
+      // escritorio
+      this.afAuth.auth
+        .signInWithPopup(new firebase.auth.FacebookAuthProvider())
+        .then(res => console.log(res));
+    }
   }
 
   async onSubmit() {
