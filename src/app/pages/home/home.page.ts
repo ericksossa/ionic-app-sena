@@ -14,4 +14,11 @@ export class HomePage {
   onLogout() {
     this.authService.logout();
   }
+
+  doRefresh(event: any) {
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
+
+  }
 }

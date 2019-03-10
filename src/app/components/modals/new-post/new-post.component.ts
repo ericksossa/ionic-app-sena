@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NavParams, ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
-declare var window: any;
+
 @Component({
   selector: 'app-new-post',
   templateUrl: './new-post.component.html',
@@ -12,14 +12,15 @@ export class NewPostComponent implements OnInit {
   imagePreview: any;
   constructor(
     protected modalController: ModalController,
-    private camera: Camera) { }
+    private camera: Camera,
+    private toastController: ToastController) { }
 
   ngOnInit() {
   }
 
   takePhoto() {
     const options: CameraOptions = {
-      quality: 80,
+      quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
@@ -27,14 +28,23 @@ export class NewPostComponent implements OnInit {
     };
 
     this.camera.getPicture(options).then((imageData) => {
-      const img = window.Ionic.WebView.convertFileSrc(imageData);
-      this.imagePreview = img;
+      const base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.imagePreview = base64Image;
 
     }, (err) => {
       // Handle error
-      console.log(JSON.stringify(err));
+      this.showError(JSON.stringify(err));
     });
 
+  }
+
+  async showError(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 1000,
+      color: 'danger'
+    });
+    toast.present();
   }
 
 }

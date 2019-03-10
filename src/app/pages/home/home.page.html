@@ -12,16 +12,24 @@
 </ion-header>
 
 <ion-content>
-
+  <!-- refrescar contenido -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+    pullingIcon="arrow-dropdown"
+    pullingText="Pull to refresh"
+    refreshingSpinner="circles"
+    refreshingText="Refreshing..."></ion-refresher-content>
+  </ion-refresher>
+<!-- /refrescar contenido -->
   <ion-card>
     <ion-item>
       <ion-avatar slot="start">
         <img src="../../assets/inicio/av1.jpg">
       </ion-avatar>
       <ion-label>Mbape
-         <p>November 5, 1955</p>
+        <p>November 5, 1955</p>
       </ion-label>
-      
+
     </ion-item>
 
     <img src="../../assets/inicio/img1.jpg">

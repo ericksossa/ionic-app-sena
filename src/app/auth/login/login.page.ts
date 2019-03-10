@@ -95,7 +95,6 @@ export class LoginPage implements OnInit, OnDestroy {
 
   }
 
-
   async showError(message: string) {
     const toast = await this.toastController.create({
       message: message,
