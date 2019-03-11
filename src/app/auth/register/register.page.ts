@@ -65,6 +65,4 @@ export class RegisterPage implements OnInit {
   onSubmit() {
     this.authService.signIn(this.registerForm.value.name, this.registerForm.value.email, this.registerForm.value.password);
   }
-
-
 }

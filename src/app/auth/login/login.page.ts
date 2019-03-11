@@ -9,8 +9,8 @@ import { AppState } from '../../app.reducer';
 import { DesactivateLoadingAction } from '../ui.actions';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
-import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
-
+import { Facebook } from '@ionic-native/facebook/ngx';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 
 @Component({
@@ -36,9 +36,11 @@ export class LoginPage implements OnInit, OnDestroy {
   };
   loginForm: FormGroup;
   subscription: Subscription;
+  load: any;
   loading: boolean;
   constructor(
     private fb: Facebook,
+    private googlePlus: GooglePlus,
     private platform: Platform,
     private afAuth: AngularFireAuth,
     public formBuilder: FormBuilder,
@@ -99,17 +101,28 @@ export class LoginPage implements OnInit, OnDestroy {
     }
   }
 
-  async onSubmit() {
-    if (!this.loginForm.valid) {
-      return;
-    }
+  signInGoogle() {
+    this.googlePlus.login({
+      'webClientId': '246001293386-2lq0oav4422rb3c3s5047qrms46rulkp.apps.googleusercontent.com',
+      'offline': true
+    }).then(res => {
+      firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
+        .then(success => {
+          console.log('Firebase success: ' + JSON.stringify(success));
+          this.router.navigateByUrl('/tabs/home');
+        })
+        .catch(error => console.log('Firebase failure: ' + JSON.stringify(error)));
+    }).catch(err => console.error('Error: ', err));
+  }
 
+  async onSubmit() {
+    if (!this.loginForm.valid) { return; }
+
+    this.presentLoading();
     this.authService.signUp(this.loginForm.value.email, this.loginForm.value.password)
       .then(resp => {
         // bien
-        if (resp) {
-          this.presentLoading();
-        }
+        if (resp) { this.load.dismiss(); }
 
         this.store.dispatch(new DesactivateLoadingAction());
         if (!this.loading) {
@@ -135,15 +148,12 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   async presentLoading() {
-    const loading = await this.loadingController.create({
+    this.load = await this.loadingController.create({
       spinner: 'crescent',
-      duration: 50,
       message: 'Please wait...',
       translucent: true,
       cssClass: 'custom-class custom-loading'
     });
-    return await loading.present();
+    return this.load.present();
   }
 }
-
-
