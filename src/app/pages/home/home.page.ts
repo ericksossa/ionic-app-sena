@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,13 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrls: ['home.page.scss']
 })
 export class HomePage {
-  constructor(private authService: AuthService) {
-
+  items: Observable<any[]>;
+  constructor(
+    private authService: AuthService,
+    private afDB: AngularFireDatabase) {
+    this.items = afDB.list('post').valueChanges();
   }
+
 
   onLogout() {
     this.authService.logout();
