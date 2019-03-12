@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-button slot="start"  (click)="dismiss()">
+      <ion-button slot="start" (click)="dismiss()">
         <ion-icon name="arrow-round-back"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -38,13 +38,11 @@
     <ion-button slot="start" fill="outline" (click)="switchEmojiPicker()">
       <ion-icon name="md-happy"></ion-icon>
     </ion-button>
-    <ion-textarea [(ngModel)]="editorMsg" 
-                  (keyup.enter)="sendMsg()" 
-                  (focusin)="onFocus()">
+    <ion-textarea #chat_input [(ngModel)]="editorMsg" (keyup.enter)="sendMsg()" (focusin)="onFocus()">
     </ion-textarea>
     <ion-button fill="outline" (click)="sendMsg()">
       <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
     </ion-button>
   </div>
-  <!-- <emoji-picker [(ngModel)]="editorMsg"></emoji-picker> -->
+ <app-emoji-picker [(ngModel)]="editorMsg"></app-emoji-picker>
 </ion-footer>

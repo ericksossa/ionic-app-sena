@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ModalController, NavParams, IonContent } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-chat-details',
@@ -7,6 +8,8 @@ import { ModalController, NavParams } from '@ionic/angular';
   styleUrls: ['./chat-details.page.scss'],
 })
 export class ChatDetailsPage implements OnInit {
+  @ViewChild(IonContent) content: IonContent;
+  @ViewChild('chat_input') messageInput: ElementRef;
   showEmojiPicker = false;
   editorMsg = '';
   name: string;
@@ -18,9 +21,22 @@ export class ChatDetailsPage implements OnInit {
     this.name = this.navParams.get('name');
   }
 
-  switchEmojiPicker() { }
+  switchEmojiPicker() {
+    this.showEmojiPicker = !this.showEmojiPicker;
+    if (!this.showEmojiPicker) {
+      this.focus();
+    } else {
+      this.setTextareaScroll();
+    }
+    this.content.resize();
+    this.scrollToBottom();
+  }
 
-  onFocus() { }
+  onFocus() {
+    this.showEmojiPicker = false;
+    this.content.resize();
+    this.scrollToBottom();
+   }
 
 
   dismiss() {
@@ -34,6 +50,25 @@ export class ChatDetailsPage implements OnInit {
     const id = Date.now().toString();
 
     this.editorMsg = '';
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+      if (this.content.scrollToBottom) {
+        this.content.scrollToBottom();
+      }
+    }, 400)
+  }
+
+  private focus() {
+    if (this.messageInput && this.messageInput.nativeElement) {
+      this.messageInput.nativeElement.focus();
+    }
+  }
+
+  private setTextareaScroll() {
+    const textarea = this.messageInput.nativeElement;
+    textarea.scrollTop = textarea.scrollHeight;
   }
 
 }
