@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ModalController, NavParams, IonContent } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular';
 
 
 @Component({
@@ -8,7 +8,7 @@ import { ModalController, NavParams, IonContent } from '@ionic/angular';
   styleUrls: ['./chat-details.page.scss'],
 })
 export class ChatDetailsPage implements OnInit {
-  @ViewChild(IonContent) content: IonContent;
+  // @ViewChild(IonContent) content: IonContent;
   @ViewChild('chat_input') messageInput: ElementRef;
   showEmojiPicker = false;
   editorMsg = '';
@@ -28,13 +28,13 @@ export class ChatDetailsPage implements OnInit {
     } else {
       this.setTextareaScroll();
     }
-    this.content.resize();
-    this.scrollToBottom();
+    // this.content.resize();
+    // this.scrollToBottom();
   }
 
   onFocus() {
     this.showEmojiPicker = false;
-    this.content.resize();
+    // this.content.resize();
     this.scrollToBottom();
    }
 
@@ -53,11 +53,11 @@ export class ChatDetailsPage implements OnInit {
   }
 
   scrollToBottom() {
-    setTimeout(() => {
-      if (this.content.scrollToBottom) {
-        this.content.scrollToBottom();
-      }
-    }, 400)
+    // setTimeout(() => {
+    //   if (this.content.scrollToBottom) {
+    //     this.content.scrollToBottom();
+    //   }
+    // }, 400);
   }
 
   private focus() {

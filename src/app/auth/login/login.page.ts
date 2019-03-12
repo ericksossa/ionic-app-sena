@@ -132,7 +132,7 @@ export class LoginPage implements OnInit, OnDestroy {
       }).
       // err
       catch(err => {
-        if (err) { this.load.dismiss(); }
+        if (err.message) { this.load.dismiss(); }
         this.showError('Error: ' + err.message);
         this.store.dispatch(new DesactivateLoadingAction());
       });
