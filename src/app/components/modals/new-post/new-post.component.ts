@@ -9,6 +9,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
   styleUrls: ['./new-post.component.scss']
 })
 export class NewPostComponent implements OnInit {
+  description: string;
   imagePreview: any;
   constructor(
     protected modalController: ModalController,

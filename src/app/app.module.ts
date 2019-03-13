@@ -23,6 +23,8 @@ import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/fi
 import { environment } from '../environments/environment';
 // service
 import { ServicesModule } from './services/services.module';
+// pipe
+import { PipesModule } from './pipes/pipes.module';
 
 
 
@@ -42,7 +44,8 @@ import { ServicesModule } from './services/services.module';
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    ServicesModule
+    ServicesModule,
+    PipesModule
   ],
   providers: [
     StatusBar,
