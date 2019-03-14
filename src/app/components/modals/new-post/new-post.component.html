@@ -7,7 +7,7 @@
     </ion-buttons>
     <ion-title text-center>{{description| placeholder:'New post'}} </ion-title>
     <ion-buttons slot="primary">
-      <ion-button>
+      <ion-button (click)="newPost()">
         Shared
       </ion-button>
     </ion-buttons>
@@ -29,6 +29,10 @@
         <ion-button shape="round" (click)="takePhoto()">
           Capture
           <ion-icon slot="end" name="camera"></ion-icon>
+        </ion-button>
+        <ion-button shape="round" (click)="selectPhoto()">
+          Select
+          <ion-icon slot="end" name="photos"></ion-icon>
         </ion-button>
         <ion-item *ngIf="imagePreview">
           <img [src]="imagePreview">

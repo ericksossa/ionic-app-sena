@@ -25,6 +25,7 @@ import { environment } from '../environments/environment';
 import { ServicesModule } from './services/services.module';
 // pipe
 import { PipesModule } from './pipes/pipes.module';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 
 
@@ -45,13 +46,14 @@ import { PipesModule } from './pipes/pipes.module';
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     ServicesModule,
-    PipesModule
+    PipesModule,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     AngularFireDatabase,
     Camera,
+    ImagePicker,
     { provide: FirestoreSettingsToken, useValue: {} },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
