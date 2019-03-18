@@ -10,8 +10,8 @@ import { UploadFileService } from 'src/app/services/upload-file/upload-file.serv
   styleUrls: ['./new-post.component.scss']
 })
 export class NewPostComponent implements OnInit {
-  description: string;
-  imagePreview: any;
+  description: string = '';
+  imagePreview: any = '';
   image64: string;
   constructor(
     protected modalController: ModalController,
@@ -66,7 +66,11 @@ export class NewPostComponent implements OnInit {
       description: this.description
     };
 
-    this._uploadFile.getImageFirebase(file);
+    this._uploadFile.getImageFirebase(file)
+      .then(() => this.modalController.dismiss())
+      .catch((err) => {
+        this.showError('error: ' + err);
+      });
 
 
   }

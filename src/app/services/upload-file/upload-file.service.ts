@@ -7,8 +7,8 @@ import { UploadFile } from './upload-file.interface';
   providedIn: 'root'
 })
 export class UploadFileService {
-
-  constructor() { }
+  images: UploadFile[] = [];
+  constructor(private afDB: AngularFireDatabase) { }
 
   getImageFirebase(file: UploadFile) {
     let promise = new Promise((resolve, reject) => {
@@ -30,15 +30,29 @@ export class UploadFileService {
         () => {
           // todo bien
           console.log('Archivo subido');
+          let url = uploadTask.snapshot.downloadURL;
+
+          this.createPost(file.description, url, fileName);
           resolve();
         }
-
       );
-
-
     });
 
     return promise;
+  }
 
+  private createPost(description: string, url: string, fileName: string) {
+
+    let post: UploadFile = {
+      img: url,
+      description: description,
+      key: fileName
+    };
+
+    console.log(JSON.stringify(post));
+    // se crea el post en firebase se omite el then
+    // this.afDB.list('/post').push(post)
+    this.afDB.object(`/post/${fileName}`).update(post);
+    this.images.push(post);
   }
 }

@@ -19,7 +19,7 @@ export class ProfilePage {
   onLogout() {
     this.authService.logout();
   }
-  
+
   async newPost() {
     const modal = await this.modalController.create({
       component: NewPostComponent
