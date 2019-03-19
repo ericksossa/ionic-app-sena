@@ -11,6 +11,7 @@ export class UploadFileService {
   constructor(private afDB: AngularFireDatabase) { }
 
   getImageFirebase(file: UploadFile) {
+
     let promise = new Promise((resolve, reject) => {
 
       const storeRef = firebase.storage().ref();
@@ -30,10 +31,12 @@ export class UploadFileService {
         () => {
           // todo bien
           console.log('Archivo subido');
-          let url = uploadTask.snapshot.downloadURL;
-
-          this.createPost(file.description, url, fileName);
-          resolve();
+          uploadTask.snapshot.ref.getDownloadURL()
+            .then((downloadURL) => {
+              let url = downloadURL;
+              this.createPost(file.description, url, fileName);
+              resolve();
+            });
         }
       );
     });

@@ -25,13 +25,31 @@ export class NewPostComponent implements OnInit {
 
   takePhoto() {
     const options: CameraOptions = {
-      quality: 100,
+      quality: 80,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      correctOrientation: true
+      correctOrientation: true,
+      sourceType: this.camera.PictureSourceType.CAMERA
     };
 
+    this.processImagen(options);
+  }
+
+  selectPhoto() {
+    const options: CameraOptions = {
+      quality: 80,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    };
+
+    this.processImagen(options);
+  }
+
+  processImagen(options: CameraOptions) {
     this.camera.getPicture(options).then((imageData) => {
       const base64Image = 'data:image/jpeg;base64,' + imageData;
       this.imagePreview = base64Image;
@@ -41,22 +59,6 @@ export class NewPostComponent implements OnInit {
       // Handle error
       this.showError(JSON.stringify(err));
     });
-
-  }
-
-  selectPhoto() {
-    const options: ImagePickerOptions = {
-      quality: 80,
-      outputType: 1,
-      maximumImagesCount: 1
-    };
-
-    this.imagePicker.getPictures(options).then((results) => {
-      for (let i = 0; i < results.length; i++) {
-        this.imagePreview = 'data:image/jpeg;base64,' + results[i];
-        this.image64 = results[i];
-      }
-    }, (err) => { this.showError(JSON.stringify(err)); });
   }
 
   newPost() {

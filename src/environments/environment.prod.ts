@@ -5,7 +5,7 @@ export const environment = {
     authDomain: 'sena-app-11840.firebaseapp.com',
     databaseURL: 'https://sena-app-11840.firebaseio.com',
     projectId: 'sena-app-11840',
-    storageBucket: '',
+    storageBucket: 'sena-app-11840.appspot.com',
     messagingSenderId: '246001293386'
   }
 };
