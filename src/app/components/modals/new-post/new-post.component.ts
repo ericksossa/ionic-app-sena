@@ -13,6 +13,7 @@ export class NewPostComponent implements OnInit {
   description: string = '';
   imagePreview: any = '';
   image64: string;
+  uploadPost: boolean = false;
   constructor(
     protected modalController: ModalController,
     private camera: Camera,
@@ -57,31 +58,34 @@ export class NewPostComponent implements OnInit {
 
     }, (err) => {
       // Handle error
-      this.showError(JSON.stringify(err));
+      this.presentToast(JSON.stringify(err), 'danger');
     });
   }
 
   newPost() {
-
+    this.uploadPost = true;
     let file = {
       img: this.image64,
       description: this.description
     };
 
     this._uploadFile.getImageFirebase(file)
-      .then(() => this.modalController.dismiss())
+      .then(() => {
+        this.presentToast('Published correctly.', 'success')
+        this.modalController.dismiss();
+      })
       .catch((err) => {
-        this.showError('error: ' + err);
+        this.presentToast(`${err}`, 'danger');
       });
 
 
   }
 
-  async showError(message: string) {
+  async presentToast(message: string, color: string) {
     const toast = await this.toastController.create({
       message: message,
       duration: 1000,
-      color: 'danger'
+      color: color
     });
     toast.present();
   }

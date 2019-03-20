@@ -17,7 +17,15 @@ export class HomePage {
     this.items = this.uploadFileService.images;
   }
 
+  doRefresh(event: any) {
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
+
+  }
+
   loadData(event) {
+    // logica del scroll infinite
     this.uploadFileService.uploadImages()
       .then((resp: boolean) => {
         if (event) {
@@ -33,22 +41,15 @@ export class HomePage {
       });
   }
 
-  onLogout() {
-    this.authService.logout();
-  }
-
-  doRefresh(event: any) {
-    setTimeout(() => {
-      event.target.complete();
-    }, 1000);
-
-  }
-
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message: message,
       duration: 2000,
     });
     toast.present();
+  }
+
+  onLogout() {
+    this.authService.logout();
   }
 }
