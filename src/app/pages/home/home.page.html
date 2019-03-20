@@ -32,22 +32,17 @@
     <img [src]="post.img">
 
     <ion-card-content>
-      <p>{{post.description | uppercase}}</p>
+      <p>{{post.description | titlecase}}</p>
     </ion-card-content>
 
     <ion-row>
       <ion-col>
-        <ion-button clear small>
+        <ion-button clear small (click)="likePost()">
           <ion-icon name="thumbs-up"></ion-icon>
-          <div>12 Likes</div>
+          <div *ngIf="likes">{{ likes }} Likes</div>
         </ion-button>
       </ion-col>
-      <ion-col>
-        <ion-button icon-start clear small>
-          <ion-icon name="text"></ion-icon>
-          <div>4 Comments</div>
-        </ion-button>
-      </ion-col>
+    
       <ion-col center text-center>
         <ion-note>
           11h ago

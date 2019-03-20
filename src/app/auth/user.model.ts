@@ -1,10 +1,10 @@
 export class User {
-    public nombre: string;
+    public name: string;
     public email: string;
     public uid: string;
 
     constructor(obj: DataObj) {
-        this.nombre = obj && obj.nombre || null;
+        this.name = obj && obj.name || null;
         this.uid = obj && obj.uid || null;
         this.email = obj && obj.email || null;
     }
@@ -13,5 +13,5 @@ export class User {
 interface DataObj {
     uid: string;
     email: string;
-    nombre: string;
+    name: string;
 }

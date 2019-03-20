@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { FormGroup, Validators, FormControl, FormBuilder } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })
-export class RegisterPage implements OnInit {
+export class RegisterPage implements OnInit, OnDestroy {
   errorMessages = {
     'email': [
       { type: 'required', message: 'Email is required.' },
@@ -30,13 +33,19 @@ export class RegisterPage implements OnInit {
 
   };
   registerForm: FormGroup;
+  subscription: Subscription = new Subscription();
   constructor(
     private authService: AuthService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    public store: Store<AppState>) {
     this.createFormsControl();
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   createFormsControl() {
@@ -63,6 +72,8 @@ export class RegisterPage implements OnInit {
   }
 
   onSubmit() {
-    this.authService.signIn(this.registerForm.value.name, this.registerForm.value.email, this.registerForm.value.password);
+    this.authService.signIn(this.registerForm.value.name,
+                            this.registerForm.value.email,
+                             this.registerForm.value.password);
   }
 }

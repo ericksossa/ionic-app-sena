@@ -8,17 +8,38 @@ import { AppState } from 'src/app/app.reducer';
 import { ActivateLoadingAction } from '../../auth/ui.actions';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { UnSetUserAction, SetUserAction } from 'src/app/auth/auth.actions';
+import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
+  private user: User;
+  private userSubscription: Subscription = new Subscription();
   constructor(
     private afAuth: AngularFireAuth,
     private afDB: AngularFirestore,
     private store: Store<AppState>,
     private router: Router) { }
+
+  initAuthListener() {
+    this.userSubscription = this.afAuth.authState.subscribe((fbuser: firebase.User) => {
+      if (fbuser) {
+        this.afDB.doc(`${fbuser.uid}/usuario`)
+          .valueChanges().subscribe((usuarioObj: any) => {
+            const newUser = new User(usuarioObj);
+            this.store.dispatch(new SetUserAction(newUser));
+            this.user = newUser;
+          });
+      } else {
+        this.user = null;
+        this.userSubscription.unsubscribe();
+      }
+
+    });
+  }
+
   // login
   signUp(email: string, password: string) {
     this.store.dispatch(new ActivateLoadingAction());
@@ -31,20 +52,20 @@ export class AuthService {
 
   }
   // register
-  signIn(nombre: string, email: string, password: string) {
+  signIn(name: string, email: string, password: string) {
 
-    // this.store.dispatch(new ActivarLoadingAction());
+    this.store.dispatch(new ActivateLoadingAction());
 
     this.afAuth.auth
       .createUserWithEmailAndPassword(email, password)
       .then(resp => {
         const user: User = {
-          nombre: nombre,
+          name: name,
           email: resp.user.email,
           uid: resp.user.uid,
         };
 
-        this.afDB.doc(`${user.uid}/usuario`)
+        this.afDB.doc(`${user.uid}/user`)
           .set(user)
           .then(() => {
             // this.router.navigate(['/']);
@@ -60,8 +81,11 @@ export class AuthService {
 
   logout() {
     this.afAuth.auth.signOut()
-      .then(() => this.router.navigate(['/login']));
-    // this.store.dispatch(new UnSetUserAction());
+      .then(() => {
+        this.router.navigate(['/login']);
+        this.store.dispatch(new UnSetUserAction());
+
+      });
   }
 
   isAuth() {

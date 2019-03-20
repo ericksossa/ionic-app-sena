@@ -10,6 +10,7 @@ import { ToastController } from '@ionic/angular';
 })
 export class HomePage {
   items: any[] = [];
+  likes: number = 0;
   constructor(
     private authService: AuthService,
     private uploadFileService: UploadFileService,
@@ -39,6 +40,11 @@ export class HomePage {
         }
 
       });
+  }
+
+  likePost() {
+    console.log('Like');
+    this.likes++;
   }
 
   async presentToast(message: string) {
