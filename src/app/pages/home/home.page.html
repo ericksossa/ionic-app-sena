@@ -14,14 +14,11 @@
 <ion-content>
   <!-- refrescar contenido -->
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content
-    pullingIcon="arrow-dropdown"
-    pullingText="Pull to refresh"
-    refreshingSpinner="circles"
-    refreshingText="Refreshing..."></ion-refresher-content>
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refreshing..."></ion-refresher-content>
   </ion-refresher>
-<!-- /refrescar contenido -->
-  <ion-card *ngFor="let post of items | async">
+  <!-- /refrescar contenido -->
+  <ion-card *ngFor="let post of items ">
     <ion-item>
       <ion-avatar slot="start">
         <img src="../../assets/inicio/av1.jpg">
@@ -35,7 +32,7 @@
     <img [src]="post.img">
 
     <ion-card-content>
-      <p>{{post.description}}</p>
+      <p>{{post.description | uppercase}}</p>
     </ion-card-content>
 
     <ion-row>
@@ -58,5 +55,10 @@
       </ion-col>
     </ion-row>
   </ion-card>
-
+  <!-- scroll infinito -->
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <!-- /scroll infinito -->
 </ion-content>

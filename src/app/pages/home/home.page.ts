@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
-import { AngularFireDatabase } from '@angular/fire/database';
-import { Observable } from 'rxjs';
+import { UploadFileService } from 'src/app/services/upload-file/upload-file.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -9,13 +9,29 @@ import { Observable } from 'rxjs';
   styleUrls: ['home.page.scss']
 })
 export class HomePage {
-  items: Observable<any[]>;
+  items: any[] = [];
   constructor(
     private authService: AuthService,
-    private afDB: AngularFireDatabase) {
-    this.items = afDB.list('post').valueChanges();
+    private uploadFileService: UploadFileService,
+    public toastController: ToastController) {
+    this.items = this.uploadFileService.images;
   }
 
+  loadData(event) {
+    this.uploadFileService.uploadImages()
+      .then((resp: boolean) => {
+        if (event) {
+          event.target.complete();
+
+          if (!resp) {
+            this.presentToast('No more records to show');
+            event.target.disabled = true;
+          }
+
+        }
+
+      });
+  }
 
   onLogout() {
     this.authService.logout();
@@ -26,5 +42,13 @@ export class HomePage {
       event.target.complete();
     }, 1000);
 
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+    });
+    toast.present();
   }
 }
