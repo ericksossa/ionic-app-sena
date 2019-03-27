@@ -20,13 +20,17 @@
   <!-- /refrescar contenido -->
   <ion-card *ngFor="let post of items ">
     <ion-item>
-      <ion-avatar slot="start">
-        <img src="../../assets/inicio/av1.jpg">
-      </ion-avatar>
-      <ion-label>Mbape
-        <p>November 5, 1955</p>
-      </ion-label>
-
+      <ion-chip slot="start" color="primary">
+        <ion-avatar>
+          <img src="../../assets/inicio/av1.jpg">
+        </ion-avatar>
+        <ion-label>
+          <b>Erick </b>
+          <p><small>
+              {{post.createAt | date}}
+            </small></p>
+        </ion-label>
+      </ion-chip>
     </ion-item>
 
     <img [src]="post.img">
@@ -42,7 +46,7 @@
           <div *ngIf="likes">{{ likes }} Likes</div>
         </ion-button>
       </ion-col>
-    
+
       <ion-col center text-center>
         <ion-note>
           11h ago
@@ -51,9 +55,17 @@
     </ion-row>
   </ion-card>
   <!-- scroll infinito -->
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+  <!-- <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
     </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  </ion-infinite-scroll> -->
   <!-- /scroll infinito -->
+
+  <!-- botón de fab -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="newPost()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <!-- /botón de fab -->
 </ion-content>

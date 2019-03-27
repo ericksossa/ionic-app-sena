@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { UploadFileService } from 'src/app/services/upload-file/upload-file.service';
-import { ToastController } from '@ionic/angular';
+import { ToastController, ModalController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import { NewPostComponent } from 'src/app/components/modals/new-post/new-post.component';
 
 @Component({
   selector: 'app-home',
@@ -11,11 +15,19 @@ import { ToastController } from '@ionic/angular';
 export class HomePage {
   items: any[] = [];
   likes: number = 0;
+  subscription: Subscription = new Subscription();
   constructor(
+    private store: Store<AppState>,
     private authService: AuthService,
     private uploadFileService: UploadFileService,
-    public toastController: ToastController) {
-    this.items = this.uploadFileService.images;
+    public toastController: ToastController,
+    private modalController: ModalController) {
+    this.subscription = this.store.select('uploadFile')
+      .subscribe(resp => {
+
+        this.items = resp.items;
+      });
+
   }
 
   doRefresh(event: any) {
@@ -27,7 +39,7 @@ export class HomePage {
 
   loadData(event) {
     // logica del scroll infinite
-    this.uploadFileService.uploadImages()
+    this.uploadFileService.getImages()
       .then((resp: boolean) => {
         if (event) {
           event.target.complete();
@@ -45,6 +57,13 @@ export class HomePage {
   likePost() {
     console.log('Like');
     this.likes++;
+  }
+
+  async newPost() {
+    const modal = await this.modalController.create({
+      component: NewPostComponent
+    });
+    return await modal.present();
   }
 
   async presentToast(message: string) {

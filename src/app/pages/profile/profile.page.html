@@ -18,7 +18,7 @@
     </ion-col>
 
     <ion-col>
-      <h1>Jhon Doe</h1>
+      <h1>{{userName}}</h1>
       <ion-button (click)="editProfile()">Edit profile</ion-button>
     </ion-col>
   </ion-row>
@@ -29,7 +29,7 @@
     <h6>cali,colombia</h6>
   </ion-row>
   <ion-row>
-    <h3>Mi descripcion</h3>
+    <h3>My description</h3>
     <p>Siga las pautas a continuación para obtener
       más detalles sobre el almacenamiento seguro y no seguro del
       nombre de usuario y las contraseñas:</p>
@@ -38,17 +38,17 @@
     </ion-button>
 
   </ion-row>
-  <ion-card>
 
+
+  <ion-card *ngFor="let post of items">
     <ion-item>
-      <p>November 5, 1955</p>
+      <p>{{post.createAt | date}}</p>
     </ion-item>
 
-    <img src="../../assets/inicio/img1.jpg">
+    <img [src]="post.img">
 
     <ion-card-content>
-      <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a
-        DeLorean?! Whoa. This is heavy.</p>
+      <p>{{post.description | titlecase}}</p>
     </ion-card-content>
 
     <ion-row>

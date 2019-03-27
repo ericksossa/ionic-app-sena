@@ -5,7 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { User } from '../../auth/user.model';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
-import { ActivateLoadingAction } from '../../auth/ui.actions';
+import { ActivateLoadingAction, DesactivateLoadingAction } from '../../auth/ui.actions';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { UnSetUserAction, SetUserAction } from 'src/app/auth/auth.actions';
@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private user: User;
+  private _user: User;
   private userSubscription: Subscription = new Subscription();
   constructor(
     private afAuth: AngularFireAuth,
@@ -24,20 +24,20 @@ export class AuthService {
     private router: Router) { }
 
   initAuthListener() {
-    this.userSubscription = this.afAuth.authState.subscribe((fbuser: firebase.User) => {
-      if (fbuser) {
-        this.afDB.doc(`${fbuser.uid}/usuario`)
-          .valueChanges().subscribe((usuarioObj: any) => {
-            const newUser = new User(usuarioObj);
-            this.store.dispatch(new SetUserAction(newUser));
-            this.user = newUser;
-          });
-      } else {
-        this.user = null;
-        this.userSubscription.unsubscribe();
-      }
-
-    });
+    this.userSubscription = this.afAuth.authState
+      .subscribe((fbuser: firebase.User) => {
+        if (fbuser) {
+          this.afDB.doc(`${fbuser.uid}/user`)
+            .valueChanges().subscribe((usuarioObj: any) => {
+              const newUser = new User(usuarioObj);
+              this.store.dispatch(new SetUserAction(newUser));
+              this._user = newUser;
+            });
+        } else {
+          this._user = null;
+          this.userSubscription.unsubscribe();
+        }
+      });
   }
 
   // login
@@ -53,7 +53,6 @@ export class AuthService {
   }
   // register
   signIn(name: string, email: string, password: string) {
-
     this.store.dispatch(new ActivateLoadingAction());
 
     this.afAuth.auth
@@ -64,18 +63,15 @@ export class AuthService {
           email: resp.user.email,
           uid: resp.user.uid,
         };
-
         this.afDB.doc(`${user.uid}/user`)
           .set(user)
           .then(() => {
-            // this.router.navigate(['/']);
-            // this.store.dispatch(new DesactivarLoadingAction());
+            this.router.navigateByUrl('/login');
+            this.store.dispatch(new DesactivateLoadingAction());
           });
-
       }).catch(error => {
-        // this.store.dispatch(new DesactivarLoadingAction());
-        // Swal.fire('Error en el login', error.message, 'error');
-
+        this.store.dispatch(new DesactivateLoadingAction());
+        console.log(error);
       });
   }
 
@@ -84,7 +80,6 @@ export class AuthService {
       .then(() => {
         this.router.navigate(['/login']);
         this.store.dispatch(new UnSetUserAction());
-
       });
   }
 
@@ -99,6 +94,10 @@ export class AuthService {
           return fbUser != null;
         })
       );
+  }
+
+  getUsuario() {
+    return { ...this._user };
   }
 
 

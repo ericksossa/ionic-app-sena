@@ -1,21 +1,40 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/database';
 import * as firebase from 'firebase';
 import { UploadFile } from './upload-file.interface';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AuthService } from '../auth/auth.service';
+import { AppState } from 'src/app/app.reducer';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { SetItemsAction } from './upload-file.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadFileService {
-  images: UploadFile[] = [];
+  itemsListenerSubcription: Subscription;
+  postItemsSubcription: Subscription;
+  images: any[] = [];
   lastKey: string = null;
-
-  constructor(private afDB: AngularFireDatabase) {
-    this.uploadLastFile().subscribe(() => this.uploadImages());
+  constructor(
+    private afDB: AngularFirestore,
+    private authService: AuthService,
+    private store: Store<AppState>) {
+    // this.uploadLastFile().subscribe(() => this.getImages());
   }
 
-  getImageFirebase(file: UploadFile) {
+  initIngresoEgresoListener() {
+    this.itemsListenerSubcription = this.store.select('auth')
+      .pipe(
+        filter(auth => auth.user != null)
+      )
+      .subscribe(auth => this.getImages(auth.user.uid));
+
+  }
+
+
+  uploadImageFirebase(file: UploadFile) {
 
     let promise = new Promise((resolve, reject) => {
 
@@ -51,37 +70,33 @@ export class UploadFileService {
 
   private uploadLastFile() {
     // carga la ultima key
-    return this.afDB.list('/post', ref => ref.orderByKey().limitToLast(1))
-      .valueChanges()
-      .pipe(map((post: any) => {
-        this.lastKey = post[0].key;
-        this.images.push(post[0]);
-      }));
+    // return this.afDB1.list('/post', ref => ref.orderByKey().limitToLast(1))
+    //   .valueChanges()
+    //   .pipe(map((post: any) => {
+    //     this.lastKey = post[0].key;
+    //     this.images.push(post[0]);
+    //   }));
 
   }
 
-  uploadImages() {
+  getImages(uid?: string) {
     return new Promise((resolve, reject) => {
-      this.afDB.list('/post',
-        ref => ref.limitToLast(3)
-          .orderByKey()
-          .endAt(this.lastKey)
-      ).valueChanges()
-        .subscribe((posts: any) => {
-          posts.pop();
-
-          if (posts.length === 0) {
-            resolve(false);
-            return;
-          }
-
-          this.lastKey = posts[0].key;
-          for (let i = posts.length - 1; i >= 0; i--) {
-            let post = posts[i];
-            this.images.push(post);
-          }
-
+      this.postItemsSubcription = this.afDB.collection(`${uid}/post/items`)
+        .snapshotChanges()
+        .pipe(
+          map(resp => {
+            return resp.map(doc => {
+              return {
+                uid: doc.payload.doc.id,
+                ...doc.payload.doc.data()
+              };
+            });
+          })
+        ).subscribe((coleccion: any[]) => {
+          this.store.dispatch(new SetItemsAction(coleccion));
+          this.images.push(coleccion);
           resolve(true);
+
         });
     });
   }
@@ -91,13 +106,17 @@ export class UploadFileService {
     let post: UploadFile = {
       img: url,
       description: description,
-      key: fileName
+      key: fileName,
+      createAt: new Date().toString(),
     };
 
-    console.log(JSON.stringify(post));
-    // se crea el post en firebase se omite el then
-    // this.afDB.list('/post').push(post)
-    this.afDB.object(`/post/${fileName}`).update(post);
+    this.afDB.doc(`${this.authService.getUsuario().uid}/post`)
+      .collection('items').add({ ...post });
     this.images.push(post);
+  }
+
+  deletePost(uid: string) {
+    return this.afDB.doc(`${this.authService.getUsuario().uid}/post/items/${uid}`)
+    .delete();
   }
 }

@@ -69,13 +69,14 @@ export class NewPostComponent implements OnInit {
       description: this.description
     };
 
-    this._uploadFile.getImageFirebase(file)
+    this._uploadFile.uploadImageFirebase(file)
       .then(() => {
-        this.presentToast('Published correctly.', 'success')
+        this.presentToast('Published correctly.', 'success');
         this.modalController.dismiss();
       })
       .catch((err) => {
         this.presentToast(`${err}`, 'danger');
+        this.uploadPost = false;
       });
 
 

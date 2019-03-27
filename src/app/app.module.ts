@@ -28,7 +28,6 @@ import { PipesModule } from './pipes/pipes.module';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

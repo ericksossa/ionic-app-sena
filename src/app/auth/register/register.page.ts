@@ -26,7 +26,7 @@ export class RegisterPage implements OnInit, OnDestroy {
     ],
     'name': [
       { type: 'required', message: 'Name is required.' },
-      { type: 'minlength', message: 'Name length must be longer or equal than 6 characters.' },
+      { type: 'minlength', message: 'Name length must be longer or equal than 4 characters.' },
       { type: 'maxlength', message: 'Name length must be lower or equal to 30 characters.' },
       // { type: 'required', message: 'Email is required.'},
     ]
@@ -52,7 +52,7 @@ export class RegisterPage implements OnInit, OnDestroy {
     this.registerForm = this.formBuilder.group({
       name: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(4),
         Validators.maxLength(30),
       ])),
       password: new FormControl('', Validators.compose([
