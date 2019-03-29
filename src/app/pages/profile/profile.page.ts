@@ -10,7 +10,8 @@ import { AppState } from 'src/app/app.reducer';
 import { filter } from 'rxjs/operators';
 import { UploadFileService } from 'src/app/services/upload-file/upload-file.service';
 import { UploadFile } from 'src/app/services/upload-file/upload-file.interface';
-
+import { ActionSheetController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-profile',
@@ -25,7 +26,9 @@ export class ProfilePage implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private modalController: ModalController,
     private uploadService: UploadFileService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    public alertController: AlertController,
+    public actionSheetController: ActionSheetController) {
     this.subscription = this.store.select('uploadFile')
       .subscribe(resp => {
         this.items = resp.items;
@@ -56,8 +59,64 @@ export class ProfilePage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
-  deleteItem(item: UploadFile) {
-    this.uploadService.deletePost(item.key)
+  async presentActionSheet(item: any) {
+        const actionSheet = await this.actionSheetController.create({
+      header: 'Options',
+      mode: 'ios',
+      buttons: [{
+        text: 'Delete',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          this.presentAlertConfirm(item);
+        }
+      }, {
+        text: 'Share',
+        icon: 'share',
+        handler: () => {
+          console.log('Share clicked');
+        }
+      }, 
+        {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
+  async presentAlertConfirm(item:any) {
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      mode:'ios',
+      message: '<strong>Are you sure you want to delete this picture?</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            this.deleteItem(item);
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  deleteItem(item: any) {
+    this.uploadService.deletePost(item.uid)
       .then();
   }
 

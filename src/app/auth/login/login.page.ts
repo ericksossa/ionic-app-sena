@@ -11,7 +11,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
-
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 @Component({
   selector: 'app-login',
@@ -39,6 +39,7 @@ export class LoginPage implements OnInit, OnDestroy {
   load: any;
   loading: boolean;
   constructor(
+    private screenOrientation: ScreenOrientation,
     private fb: Facebook,
     private googlePlus: GooglePlus,
     private platform: Platform,

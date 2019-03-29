@@ -5,62 +5,77 @@
         <ion-icon name="exit"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>
-      Profile
-    </ion-title>
+
+    <ion-title>Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding="padding">
   <ion-row>
     <ion-col>
-      <img class="pic_profile" src="../../assets/inicio/av1.jpg">
+      <img
+        class="pic_profile"
+        src="../../assets/inicio/av1.jpg"
+      >
     </ion-col>
 
     <ion-col>
       <h1>{{userName}}</h1>
+
       <ion-button (click)="editProfile()">Edit profile</ion-button>
     </ion-col>
   </ion-row>
+
   <ion-row>
     <h6>Medellin,colombia</h6>
   </ion-row>
+
   <ion-row>
     <h6>cali,colombia</h6>
   </ion-row>
+
   <ion-row>
     <h3>My description</h3>
-    <p>Siga las pautas a continuación para obtener
+
+    <p>
+      Siga las pautas a continuación para obtener
       más detalles sobre el almacenamiento seguro y no seguro del
-      nombre de usuario y las contraseñas:</p>
-    <ion-button shape="round" fill="outline" color="success" (click)="newPost()">
-      Add to activity
-    </ion-button>
+      nombre de usuario y las contraseñas:
+    </p>
 
+    <ion-button
+      shape="round"
+      fill="outline"
+      color="success"
+      (click)="newPost()"
+    >Add to activity</ion-button>
   </ion-row>
-
 
   <ion-card *ngFor="let post of items">
     <ion-item>
       <p>{{post.createAt | date}}</p>
+      <ion-row >
+        <ion-col align-self-end>
+          <ion-button fill="outline" (click)="presentActionSheet(post)">
+            <ion-icon name="more"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
     </ion-item>
+
 
     <img [src]="post.img">
 
     <ion-card-content>
-      <p>{{post.description | titlecase}}</p>
+      <p>
+        {{post.description | titlecase}}
+      </p>
     </ion-card-content>
 
     <ion-row>
-
-      <ion-col left>
-        <ion-note>
-          11h ago
-        </ion-note>
+      <ion-col left="left">
+        <ion-note>11h ago</ion-note>
       </ion-col>
     </ion-row>
-
   </ion-card>
-
-
 </ion-content>

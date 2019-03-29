@@ -9,6 +9,7 @@ import { LoginPage } from './login.page';
 // plugins
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 
 const routes: Routes = [
@@ -29,7 +30,8 @@ const routes: Routes = [
   declarations: [LoginPage],
   providers: [
     Facebook,
-    GooglePlus
+    GooglePlus,
+    ScreenOrientation
   ]
 })
 export class LoginPageModule {}
