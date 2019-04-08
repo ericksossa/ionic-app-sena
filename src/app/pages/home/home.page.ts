@@ -24,7 +24,6 @@ export class HomePage {
     private modalController: ModalController) {
     this.subscription = this.store.select('uploadFile')
       .subscribe(resp => {
-
         this.items = resp.items;
       });
 
@@ -76,5 +75,6 @@ export class HomePage {
 
   onLogout() {
     this.authService.logout();
+    this.uploadFileService.cancelSubs();
   }
 }

@@ -12,6 +12,7 @@ import { UploadFileService } from 'src/app/services/upload-file/upload-file.serv
 import { UploadFile } from 'src/app/services/upload-file/upload-file.interface';
 import { ActionSheetController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @Component({
   selector: 'app-profile',
@@ -28,6 +29,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     private uploadService: UploadFileService,
     private authService: AuthService,
     public alertController: AlertController,
+    private socialSharing: SocialSharing,
     public actionSheetController: ActionSheetController) {
     this.subscription = this.store.select('uploadFile')
       .subscribe(resp => {
@@ -60,7 +62,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   async presentActionSheet(item: any) {
-        const actionSheet = await this.actionSheetController.create({
+    const actionSheet = await this.actionSheetController.create({
       header: 'Options',
       mode: 'ios',
       buttons: [{
@@ -74,10 +76,10 @@ export class ProfilePage implements OnInit, OnDestroy {
         text: 'Share',
         icon: 'share',
         handler: () => {
-          console.log('Share clicked');
+          this.shareWhatsapp(item);
         }
-      }, 
-        {
+      },
+      {
         text: 'Cancel',
         icon: 'close',
         role: 'cancel',
@@ -89,10 +91,10 @@ export class ProfilePage implements OnInit, OnDestroy {
     await actionSheet.present();
   }
 
-  async presentAlertConfirm(item:any) {
+  async presentAlertConfirm(item: any) {
     const alert = await this.alertController.create({
       header: 'Confirm!',
-      mode:'ios',
+      mode: 'ios',
       message: '<strong>Are you sure you want to delete this picture?</strong>',
       buttons: [
         {
@@ -115,6 +117,15 @@ export class ProfilePage implements OnInit, OnDestroy {
     await alert.present();
   }
 
+  public shareWhatsapp(item: any) {
+    this.socialSharing.shareViaWhatsApp(item.description, item.img)
+      .then(() => {
+
+      }).catch((err) => {
+        console.log(err);
+      });
+  }
+
   deleteItem(item: any) {
     this.uploadService.deletePost(item.uid)
       .then();
@@ -122,5 +133,6 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   onLogout() {
     this.authService.logout();
+    this.uploadService.cancelSubs();
   }
 }

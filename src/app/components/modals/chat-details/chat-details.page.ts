@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams, IonContent } from '@ionic/angular';
+import { ChatService } from 'src/app/services/chat/chat.service';
 
 
 @Component({
@@ -8,14 +9,17 @@ import { ModalController, NavParams } from '@ionic/angular';
   styleUrls: ['./chat-details.page.scss'],
 })
 export class ChatDetailsPage implements OnInit {
-  // @ViewChild(IonContent) content: IonContent;
+  @ViewChild(IonContent) content: IonContent;
   @ViewChild('chat_input') messageInput: ElementRef;
   showEmojiPicker = false;
-  editorMsg = '';
+  editorMsg: any = '';
+  msgList: any[] = [];
   name: string;
+  user: any;
   constructor(
     private modalController: ModalController,
-    private navParams: NavParams) { }
+    private navParams: NavParams,
+    private chatService: ChatService) { }
 
   ngOnInit() {
     this.name = this.navParams.get('name');
@@ -29,14 +33,14 @@ export class ChatDetailsPage implements OnInit {
       this.setTextareaScroll();
     }
     // this.content.resize();
-    // this.scrollToBottom();
+    this.scrollToBottom();
   }
 
   onFocus() {
     this.showEmojiPicker = false;
     // this.content.resize();
     this.scrollToBottom();
-   }
+  }
 
 
   dismiss() {
@@ -45,19 +49,30 @@ export class ChatDetailsPage implements OnInit {
 
   sendMsg() {
     if (!this.editorMsg.trim()) { return; }
-    console.log(this.editorMsg);
     // Mock message
     const id = Date.now().toString();
+    let newMsg: any = {
+      // messageId: Date.now().toString(),
+      // userId: this.user.id,
+      // userName: this.user.name,
+      // userAvatar: this.user.avatar,
+      // toUserId: this.toUser.id,
+      time: Date.now(),
+      message: this.editorMsg,
+      status: ''
+    };
 
+    this.msgList.push(newMsg);
+    console.log(this.msgList);
     this.editorMsg = '';
   }
 
   scrollToBottom() {
-    // setTimeout(() => {
-    //   if (this.content.scrollToBottom) {
-    //     this.content.scrollToBottom();
-    //   }
-    // }, 400);
+    setTimeout(() => {
+      if (this.content.scrollToBottom) {
+        this.content.scrollToBottom();
+      }
+    }, 400);
   }
 
   private focus() {

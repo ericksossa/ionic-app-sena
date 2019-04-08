@@ -26,6 +26,8 @@ import { ServicesModule } from './services/services.module';
 // pipe
 import { PipesModule } from './pipes/pipes.module';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
+// plugins
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 
 @NgModule({
@@ -51,6 +53,7 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
     StatusBar,
     SplashScreen,
     AngularFireDatabase,
+    SocialSharing,
     Camera,
     ImagePicker,
     { provide: FirestoreSettingsToken, useValue: {} },

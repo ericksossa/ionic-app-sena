@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from './auth/auth.service';
 import { UploadFileService } from './upload-file/upload-file.service';
+import { ChatService } from './chat/chat.service';
 
 @NgModule({
   declarations: [],
@@ -10,7 +11,8 @@ import { UploadFileService } from './upload-file/upload-file.service';
   ],
   providers: [
     AuthService,
-    UploadFileService
+    UploadFileService,
+    ChatService
   ]
 })
 export class ServicesModule { }

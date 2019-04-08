@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { UnSetUserAction, SetUserAction } from 'src/app/auth/auth.actions';
 import { Subscription } from 'rxjs';
+import { UploadFileService } from '../upload-file/upload-file.service';
 
 @Injectable({
   providedIn: 'root'

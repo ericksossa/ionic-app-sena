@@ -13,17 +13,19 @@
 
   <div class="message-wrap">
 
-    <div>
-      <img class="user-img">
-      <!-- <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner> -->
+    <div *ngFor="let msg of msgList" 
+          class="message"
+          [class.right] ="true">
+      <img class="user-img" src="../../assets/inicio/av1.jpg">
+      <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner>
       <div class="msg-detail">
-        <div class="msg-info">
-          <p>
-            &nbsp;&nbsp;&nbsp;</p>
-        </div>
+           <div class="msg-info">
+            <p>
+              {{'Mbappe'}}&nbsp;&nbsp;&nbsp;{{msg.time | relativeTime}}</p>
+          </div>
         <div class="msg-content">
           <span class="triangle"></span>
-          <p class="line-breaker "></p>
+          <p class="line-breaker">{{msg.message}}</p>
         </div>
       </div>
     </div>
@@ -34,15 +36,14 @@
 
 <ion-footer no-border [style.height]="showEmojiPicker ? '255px' : '55px'">
   <div class="input-wrap">
-
     <ion-button slot="start" fill="outline" (click)="switchEmojiPicker()">
       <ion-icon name="md-happy"></ion-icon>
     </ion-button>
-    <ion-textarea #chat_input [(ngModel)]="editorMsg" (keyup.enter)="sendMsg()" (focusin)="onFocus()">
+    <ion-textarea #chat_input [(ngModel)]="editorMsg" (keyup.enter)="sendMsg()" ngDefaultControl (focusin)="onFocus()">
     </ion-textarea>
     <ion-button fill="outline" (click)="sendMsg()">
       <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
     </ion-button>
   </div>
- <app-emoji-picker [(ngModel)]="editorMsg"></app-emoji-picker>
+  <app-emoji-picker [(ngModel)]="editorMsg"></app-emoji-picker>
 </ion-footer>

@@ -7,7 +7,7 @@ import { AuthService } from '../auth/auth.service';
 import { AppState } from 'src/app/app.reducer';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { SetItemsAction } from './upload-file.actions';
+import { SetItemsAction, UnsetItemsAction } from './upload-file.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,8 @@ import { SetItemsAction } from './upload-file.actions';
 export class UploadFileService {
   itemsListenerSubcription: Subscription;
   postItemsSubcription: Subscription;
+  subscription: Subscription;
+  userName: any;
   images: any[] = [];
   lastKey: string = null;
   constructor(
@@ -22,6 +24,9 @@ export class UploadFileService {
     private authService: AuthService,
     private store: Store<AppState>) {
     // this.uploadLastFile().subscribe(() => this.getImages());
+    this.subscription = this.store.select('auth')
+      .pipe(filter(auth => auth.user != null))
+      .subscribe(auth => this.userName = auth.user.name);
   }
 
   initIngresoEgresoListener() {
@@ -58,7 +63,7 @@ export class UploadFileService {
           uploadTask.snapshot.ref.getDownloadURL()
             .then((downloadURL) => {
               let url = downloadURL;
-              this.createPost(file.description, url, fileName);
+              this.createPost(file.description, url);
               resolve();
             });
         }
@@ -101,12 +106,18 @@ export class UploadFileService {
     });
   }
 
-  private createPost(description: string, url: string, fileName: string) {
+  cancelSubs() {
+    this.itemsListenerSubcription.unsubscribe();
+    this.postItemsSubcription.unsubscribe();
+    this.store.dispatch(new UnsetItemsAction());
+  }
+
+  private createPost(description: string, url: string) {
 
     let post: UploadFile = {
       img: url,
       description: description,
-      key: fileName,
+      key: this.userName,
       createAt: new Date().toString(),
     };
 
@@ -117,6 +128,6 @@ export class UploadFileService {
 
   deletePost(uid: string) {
     return this.afDB.doc(`${this.authService.getUsuario().uid}/post/items/${uid}`)
-    .delete();
+      .delete();
   }
 }
