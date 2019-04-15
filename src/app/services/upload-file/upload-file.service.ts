@@ -75,7 +75,7 @@ export class UploadFileService {
 
   private uploadLastFile() {
     // carga la ultima key
-    // return this.afDB1.list('/post', ref => ref.orderByKey().limitToLast(1))
+    // return this.afDB.list('/post', ref => ref.orderByKey().limitToLast(1))
     //   .valueChanges()
     //   .pipe(map((post: any) => {
     //     this.lastKey = post[0].key;
@@ -101,7 +101,6 @@ export class UploadFileService {
           this.store.dispatch(new SetItemsAction(coleccion));
           this.images.push(coleccion);
           resolve(true);
-
         });
     });
   }

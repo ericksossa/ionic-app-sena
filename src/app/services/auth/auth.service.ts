@@ -56,7 +56,7 @@ export class AuthService {
   signIn(name: string, email: string, password: string) {
     this.store.dispatch(new ActivateLoadingAction());
 
-    this.afAuth.auth
+    return this.afAuth.auth
       .createUserWithEmailAndPassword(email, password)
       .then(resp => {
         const user: User = {
@@ -70,9 +70,6 @@ export class AuthService {
             this.router.navigateByUrl('/login');
             this.store.dispatch(new DesactivateLoadingAction());
           });
-      }).catch(error => {
-        this.store.dispatch(new DesactivateLoadingAction());
-        console.log(error);
       });
   }
 

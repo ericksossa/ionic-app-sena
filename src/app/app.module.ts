@@ -28,6 +28,7 @@ import { PipesModule } from './pipes/pipes.module';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 // plugins
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 
 @NgModule({
@@ -55,9 +56,10 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
     AngularFireDatabase,
     SocialSharing,
     Camera,
+    ScreenOrientation,
     ImagePicker,
     { provide: FirestoreSettingsToken, useValue: {} },
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent]
 })

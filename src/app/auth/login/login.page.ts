@@ -83,7 +83,8 @@ export class LoginPage implements OnInit, OnDestroy {
     if (this.platform.is('cordova')) {
       // celular
       this.fb.login(['email', 'public_profile']).then(res => {
-        const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
+        const facebookCredential = firebase.auth.FacebookAuthProvider
+          .credential(res.authResponse.accessToken);
         firebase.auth().signInWithCredential(facebookCredential)
           .then(user => {
             console.log(user);

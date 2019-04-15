@@ -4,6 +4,8 @@ import { FormGroup, Validators, FormControl, FormBuilder } from '@angular/forms'
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
+import { ToastController } from '@ionic/angular';
+import { DesactivateLoadingAction } from '../ui.actions';
 
 @Component({
   selector: 'app-register',
@@ -36,6 +38,7 @@ export class RegisterPage implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   constructor(
     private authService: AuthService,
+    private toastController: ToastController,
     private formBuilder: FormBuilder,
     public store: Store<AppState>) {
     this.createFormsControl();
@@ -74,6 +77,19 @@ export class RegisterPage implements OnInit, OnDestroy {
   onSubmit() {
     this.authService.signIn(this.registerForm.value.name,
                             this.registerForm.value.email,
-                             this.registerForm.value.password);
+                             this.registerForm.value.password)
+                             .catch((err) => {
+                               this.store.dispatch(new DesactivateLoadingAction());
+                               this.showError('Error: ' + err.message);
+                               });
+  }
+
+  async showError(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 1000,
+      color: 'danger'
+    });
+    toast.present();
   }
 }

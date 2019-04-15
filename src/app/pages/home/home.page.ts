@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { NewPostComponent } from 'src/app/components/modals/new-post/new-post.component';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -28,6 +29,7 @@ export class HomePage {
       });
 
   }
+
 
   doRefresh(event: any) {
     setTimeout(() => {

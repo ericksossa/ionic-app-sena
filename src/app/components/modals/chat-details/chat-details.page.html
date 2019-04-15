@@ -39,7 +39,10 @@
     <ion-button slot="start" fill="outline" (click)="switchEmojiPicker()">
       <ion-icon name="md-happy"></ion-icon>
     </ion-button>
-    <ion-textarea #chat_input [(ngModel)]="editorMsg" (keyup.enter)="sendMsg()" ngDefaultControl (focusin)="onFocus()">
+    <ion-textarea #chat_input [(ngModel)]="editorMsg" 
+                  (keyup.enter)="sendMsg()" 
+                  ngDefaultControl 
+                  (focusin)="onFocus()">
     </ion-textarea>
     <ion-button fill="outline" (click)="sendMsg()">
       <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
