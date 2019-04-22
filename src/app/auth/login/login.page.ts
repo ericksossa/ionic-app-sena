@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { ToastController, LoadingController, Platform } from '@ionic/angular';
+import { ToastController, LoadingController, Platform, IonSlides } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.reducer';
@@ -19,6 +19,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit, OnDestroy {
+  @ViewChild('slideMain') slides: IonSlides;
   errorMessages = {
     'email': [
       { type: 'required', message: 'Email is required.' },
@@ -54,6 +55,7 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.slides.lockSwipes(true);
     this.subscription = this.store.select('ui')
       .subscribe(ui => this.loading = ui.isLoading);
   }
@@ -62,13 +64,24 @@ export class LoginPage implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  goSignUp() {
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(1);
+    this.slides.lockSwipes(true);
+  }
+
+  goSignIn() {
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(0);
+    this.slides.lockSwipes(true);
+  }
+
   createFormsControl() {
     this.loginForm = this.formBuilder.group({
       password: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(6),
         Validators.maxLength(30),
-
       ])),
       email: new FormControl('', Validators.compose([
         Validators.required,
@@ -89,7 +102,6 @@ export class LoginPage implements OnInit, OnDestroy {
           .then(user => {
             console.log(user);
             if (user) {
-
               this.router.navigateByUrl('/tabs/home');
             }
           }).catch(e => console.error(JSON.stringify(e)));
@@ -99,7 +111,11 @@ export class LoginPage implements OnInit, OnDestroy {
       // escritorio
       this.afAuth.auth
         .signInWithPopup(new firebase.auth.FacebookAuthProvider())
-        .then(res => console.log(res));
+        .then(res => {
+          if (res) {
+            this.router.navigateByUrl('/tabs/home');
+          }
+        });
     }
   }
 
@@ -117,7 +133,7 @@ export class LoginPage implements OnInit, OnDestroy {
     }).catch(err => console.error('Error: ', err));
   }
 
-  async onSubmit() {
+  onSubmit() {
     if (!this.loginForm.valid) { return; }
 
     this.presentLoading();

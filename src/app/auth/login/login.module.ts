@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { LoginPage } from './login.page';
+import { RegisterPageModule } from '../register/register.module';
 // plugins
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
@@ -23,6 +24,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    RegisterPageModule,
     ReactiveFormsModule,
     IonicModule,
     RouterModule.forChild(routes)
@@ -33,5 +35,6 @@ const routes: Routes = [
     GooglePlus,
     ScreenOrientation
   ]
+
 })
-export class LoginPageModule {}
+export class LoginPageModule { }

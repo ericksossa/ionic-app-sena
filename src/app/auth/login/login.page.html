@@ -1,83 +1,113 @@
-<ion-content padding text-center style="--color: white; --background: url('../../../assets/img/fondologin2.jpg') 0 0/155% 100% no-repeat">
-  <ion-grid>
+<ion-content>
+  <ion-slides #slideMain class="mainSlide">
+    <!-- login-slide -->
+    <ion-slide>
+      <div id="background"></div>
+      <div id="wrapper"></div>
+      <form [formGroup]="loginForm">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item style="--padding: 0px !important;
+          --border-bottom: none !important;
+          --border-top: none;
+          --font-size: 14px;
+          --margin-top: 10px;
+          --background: none;
+          --border-bottom: 1px solid white;
+          --box-shadow: none;">
+                <!-- inputs -->
+                <ion-label position="floating" color="light">
+                  <ion-icon name="at" item-start color="light"></ion-icon>
+                  Email Address
+                </ion-label>
+                <ion-input formControlName="email" name="email" type="text"></ion-input>
+              </ion-item>
+              <div class="error-messages">
+                <ng-container *ngFor="let error of errorMessages.email">
+                  <div class="error-messages"
+                    *ngIf="loginForm.get('email').hasError(error.type) && (loginForm.get('email').dirty || loginForm.get('email').touched) ">
+                    {{error.message}}
+                  </div>
+                </ng-container>
+              </div>
+
+              <ion-item style="--padding: 0px !important;
+          --border-bottom: none !important;
+          --border-top: none;
+          --font-size: 14px;
+          --margin-top: 10px;
+          --background: none;
+          --border-bottom: 1px solid white;
+          --box-shadow: none;">
+                <ion-label position="floating" color="light">
+                  <ion-icon name="lock" item-start color="light"></ion-icon>
+                  Password
+                </ion-label>
+                <ion-input formControlName="password" name="password" type="password"></ion-input>
+                <!-- /inputs -->
+              </ion-item>
+
+              <div class="error-messages">
+                <ng-container *ngFor="let error of errorMessages.password">
+                  <div class="error-messages"
+                    *ngIf="loginForm.get('password').hasError(error.type) && (loginForm.get('password').dirty || loginForm.get('password').touched) ">
+                    {{error.message}}
+                  </div>
+                </ng-container>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-button (click)="onSubmit()" type="submit" color="tertiary" shape="round">
+                Login
+              </ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="top-5">
+              <!-- buttons -->
+              <p>
+                Sign in With Social Account
+              </p>
+              <ion-button color="facebook" (click)="signInWithFacebook()">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </ion-button>
+              <ion-button color="google" (click)="signInGoogle()">
+                <ion-icon name="logo-googleplus"></ion-icon>
+              </ion-button>
+              <!-- /buttons -->
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+    </ion-slide>
+    <!-- /login-slide -->
+    <!-- register-slide -->
+    <ion-slide>
+      <ion-grid fixed>
+        <app-register></app-register>
+      </ion-grid>
+    </ion-slide>
+    <!-- /register-slide -->
+  </ion-slides>
+</ion-content>
+<ion-footer no-border>
+  <ion-toolbar>
     <ion-row>
       <ion-col>
-
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="top-60">
-        <form [formGroup]="loginForm">
-          <ion-item style="--padding: 0px !important;
-          --border-bottom: none !important;
-          --border-top: none;
-          --font-size: 14px;
-          --margin-top: 10px;
-          --background: none;
-          --border-bottom: 1px solid white;
-          --box-shadow: none;">
-            <!-- inputs -->
-            <ion-label position="floating">
-              <ion-icon name="at" item-start class="text-primary"></ion-icon>
-              Email Address
-            </ion-label>
-            <ion-input formControlName="email" name="email" type="text"></ion-input>
-          </ion-item>
-          <div class="error-messages">
-            <ng-container *ngFor="let error of errorMessages.email">
-              <div class="error-messages" *ngIf="loginForm.get('email').hasError(error.type) && (loginForm.get('email').dirty || loginForm.get('email').touched) ">
-                {{error.message}}
-              </div>
-            </ng-container>
-          </div>
-
-          <ion-item style="--padding: 0px !important;
-          --border-bottom: none !important;
-          --border-top: none;
-          --font-size: 14px;
-          --margin-top: 10px;
-          --background: none;
-          --border-bottom: 1px solid white;
-          --box-shadow: none;">
-            <ion-label position="floating">
-              <ion-icon name="lock" item-start class="text-primary"></ion-icon>
-              Password
-            </ion-label>
-            <ion-input formControlName="password" name="password" type="password"></ion-input>
-            <!-- /inputs -->
-          </ion-item>
-
-          <div class="error-messages">
-            <ng-container *ngFor="let error of errorMessages.password">
-              <div class="error-messages" *ngIf="loginForm.get('password').hasError(error.type) && (loginForm.get('password').dirty || loginForm.get('password').touched) ">
-                {{error.message}}
-              </div>
-            </ng-container>
-          </div>
-
-          <ion-button (click)="onSubmit()" color="primary" expand="block"> SIGN IN</ion-button>
-        </form>
-
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="top-5">
-        <!-- buttons -->
-        <p>
-          Sign in With Social Account
-        </p>
-        <ion-button color="facebook" (click)="signInWithFacebook()">
-          <ion-icon name="logo-facebook"></ion-icon>
+        <ion-button (click)="goSignIn()" shape="round" expand="full" size="small" fill="outline" color="primary">
+          SIGN IN
         </ion-button>
-        <ion-button color="google" (click)="signInGoogle()">
-          <ion-icon name="logo-googleplus"></ion-icon>
+      </ion-col>
+
+      <ion-col>
+        <ion-button (click)="goSignUp()" shape="round" expand="full" size="small" fill="outline" color="primary">
+          SIGN UP
         </ion-button>
-        <!-- /buttons -->
       </ion-col>
     </ion-row>
-    <p>
-      Don't have an account?
-      <a class="text-danger" routerLink="/register"> SIGN UP</a>
-    </p>
-  </ion-grid>
-</ion-content>
+  </ion-toolbar>
+</ion-footer>

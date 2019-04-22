@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 import { UnSetUserAction, SetUserAction } from 'src/app/auth/auth.actions';
 import { Subscription } from 'rxjs';
 import { UploadFileService } from '../upload-file/upload-file.service';
+import { LoginPage } from '../../auth/login/login.page';
 
 @Injectable({
   providedIn: 'root'
@@ -50,12 +51,10 @@ export class AuthService {
           (user) => resolve(user))
         .catch(err => rejected(err));
     });
-
   }
   // register
   signIn(name: string, email: string, password: string) {
     this.store.dispatch(new ActivateLoadingAction());
-
     return this.afAuth.auth
       .createUserWithEmailAndPassword(email, password)
       .then(resp => {
@@ -67,7 +66,6 @@ export class AuthService {
         this.afDB.doc(`${user.uid}/user`)
           .set(user)
           .then(() => {
-            this.router.navigateByUrl('/login');
             this.store.dispatch(new DesactivateLoadingAction());
           });
       });
@@ -76,6 +74,7 @@ export class AuthService {
   logout() {
     this.afAuth.auth.signOut()
       .then(() => {
+        this._user = null;
         this.router.navigate(['/login']);
         this.store.dispatch(new UnSetUserAction());
       });

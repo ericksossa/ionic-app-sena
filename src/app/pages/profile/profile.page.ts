@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 
-import { ModalController } from '@ionic/angular';
+import { ModalController, IonSegment } from '@ionic/angular';
 import { EditProfileComponent } from 'src/app/components/modals/edit-profile/edit-profile.component';
 import { NewPostComponent } from 'src/app/components/modals/new-post/new-post.component';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -20,6 +20,10 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
   styleUrls: ['profile.page.scss']
 })
 export class ProfilePage implements OnInit, OnDestroy {
+  @ViewChild(IonSegment) segment: IonSegment;
+  galleryType = 'grid';
+  start = 'star-outline';
+  likes: number = 0; // TODO
   userName: string;
   items: any[] = [];
   subscription: Subscription;
@@ -41,10 +45,16 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.subscription = this.store.select('auth')
       .pipe(filter(auth => auth.user != null))
       .subscribe(auth => this.userName = auth.user.name);
+    // valor por defecto del IonSegment
+    this.segment.value = 'grid';
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  segmentChanged(e) {
+    this.galleryType = e.detail.value;
   }
 
   async newPost() {
@@ -118,12 +128,27 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   public shareWhatsapp(item: any) {
-    this.socialSharing.shareViaWhatsApp(item.description, item.img)
+    this.socialSharing.share(item.description, null, item.img)
       .then(() => {
 
       }).catch((err) => {
         console.log(err);
       });
+  }
+
+  likePost() {
+    this.likes++;
+    if (this.likes <= 1) {
+      this.start = 'star';
+      console.log('Like');
+
+    } else {
+      this.start = 'star-outline';
+      this.likes = 0;
+      console.log('Unlike');
+      return;
+    }
+
   }
 
   deleteItem(item: any) {

@@ -11,50 +11,52 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [scrollEvents]="true" appAutoHide>
   <!-- refrescar contenido -->
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
-      refreshingText="Refreshing..."></ion-refresher-content>
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
   </ion-refresher>
   <!-- /refrescar contenido -->
-  <ion-card *ngFor="let post of items " >
-    <ion-item>
-      <ion-chip slot="start" color="primary">
-        <ion-avatar>
-          <img src="../../assets/inicio/av1.jpg">
-        </ion-avatar>
-        <ion-label>
-          <b>{{post.key}} </b>
-          <p><small>
-              {{post.createAt | date}}
-            </small></p>
-        </ion-label>
-      </ion-chip>
-    </ion-item>
 
-    <img [src]="post.img">
-
-    <ion-card-content>
-      <p>{{post.description | titlecase}}</p>
-    </ion-card-content>
-
-
-    <ion-row>
-      <ion-col>
-        <ion-button clear small (click)="likePost()">
-          <ion-icon name="thumbs-up"></ion-icon>
-          <div *ngIf="likes">{{ likes }} Likes</div>
-        </ion-button>
-      </ion-col>
-
-      <ion-col center text-center>
-        <ion-note>
-          {{post.createAt | relativeTime }}
-        </ion-note>
-      </ion-col>
-    </ion-row>
-  </ion-card>
+  <ion-row>
+    <ion-col size="12" size-lg="3" size-md="4" size-sm="6" *ngFor="let post of items ">
+      <ion-card>
+        <ion-item>
+          <ion-chip slot="start" color="primary">
+            <ion-avatar>
+              <img src="../../assets/inicio/av1.jpg">
+            </ion-avatar>
+            <ion-label>
+              <b>{{post.key}} </b>
+              <p><small>
+                  {{post.createAt | date}}
+                </small></p>
+            </ion-label>
+          </ion-chip>
+          <ion-note slot="end">
+            {{post.createAt | relativeTime }}
+          </ion-note>
+        </ion-item>
+        <img [src]="post.img">
+        <ion-card-content>
+          <p>{{post.description | titlecase}}</p>
+        </ion-card-content>
+        <ion-item>
+          <ion-button fill="clear" size="small">
+            <ion-icon name="pin"></ion-icon>
+          </ion-button>
+          <ion-button (click)="likePost()" slot="end" fill="clear" size="small">
+            <ion-icon [name]="start"></ion-icon>
+          </ion-button>
+          <ion-button slot="end" fill="clear" (click)="presentActionSheet(post)">
+            <ion-icon name="ios-more"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-card>
+    </ion-col>
+  </ion-row>
   <!-- scroll infinito -->
   <!-- <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
@@ -64,7 +66,7 @@
 
   <!-- botón de fab -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="newPost()">
+    <ion-fab-button color="tertiary" (click)="newPost()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

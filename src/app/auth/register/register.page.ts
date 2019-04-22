@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { ToastController } from '@ionic/angular';
 import { DesactivateLoadingAction } from '../ui.actions';
+import { LoginPage } from '../login/login.page';
 
 @Component({
   selector: 'app-register',
@@ -37,6 +38,7 @@ export class RegisterPage implements OnInit, OnDestroy {
   registerForm: FormGroup;
   subscription: Subscription = new Subscription();
   constructor(
+    private loginPage: LoginPage,
     private authService: AuthService,
     private toastController: ToastController,
     private formBuilder: FormBuilder,
@@ -76,12 +78,13 @@ export class RegisterPage implements OnInit, OnDestroy {
 
   onSubmit() {
     this.authService.signIn(this.registerForm.value.name,
-                            this.registerForm.value.email,
-                             this.registerForm.value.password)
-                             .catch((err) => {
-                               this.store.dispatch(new DesactivateLoadingAction());
-                               this.showError('Error: ' + err.message);
-                               });
+      this.registerForm.value.email,
+      this.registerForm.value.password)
+      .then(() => this.loginPage.goSignIn())
+      .catch((err) => {
+        this.store.dispatch(new DesactivateLoadingAction());
+        this.showError('Error: ' + err.message);
+      });
   }
 
   async showError(message: string) {

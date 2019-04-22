@@ -4,9 +4,8 @@
 /** Ionic CSS Variables **/
 :root {
 
- 
   /** primary **/
-  --ion-color-primary: #3880ff;
+  --ion-color-primary: #42456E;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
@@ -77,24 +76,27 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 
-   // custom variables
+  // custom variables
   .ion-color-facebook {
     --ion-color-base: #3b5998;
-    --ion-color-base-rgb: 105,187,123;
+    --ion-color-base-rgb: 105, 187, 123;
     --ion-color-contrast: #ffffff;
-    --ion-color-contrast-rgb: 255,255,255;
+    --ion-color-contrast-rgb: 255, 255, 255;
     --ion-color-shade: #3b5998;
     --ion-color-tint: #78c288;
   }
+
   .ion-color-google {
     --ion-color-base: #dd4b39;
-    --ion-color-base-rgb: 105,187,123;
+    --ion-color-base-rgb: 105, 187, 123;
     --ion-color-contrast: #ffffff;
-    --ion-color-contrast-rgb: 255,255,255;
+    --ion-color-contrast-rgb: 255, 255, 255;
     --ion-color-shade: #dd4b39;
     --ion-color-tint: #78c288;
   }
-  
 
-  
+
+  // How to change ion-tabbar active tab color
+  --ion-tab-bar-color-activated:var(--ion-color-tertiary);
+
 }

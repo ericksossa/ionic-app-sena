@@ -1,6 +1,10 @@
-
-   .pic_profile{
+.pic_profile {
     border-radius: 100%;
-    width:100px ;
+    width: 100px;
     height: 100px;
+}
+
+.image-container {
+    background-size: cover;
+    min-height: 200px; 
 }

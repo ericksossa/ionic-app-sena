@@ -1,0 +1,31 @@
+.page-centered-element {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  .buttons-container {
+    margin-top: 30px;
+  }
+}
+
+  h1 {
+    color: #7044ff;
+  }
+
+  h5 {
+    color: #fff;
+    font-size: 19px;
+    font-weight: lighter;
+    margin-bottom: 60px;
+  }
