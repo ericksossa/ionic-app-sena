@@ -1,4 +1,5 @@
 import { Directive, Renderer, ElementRef, OnInit } from '@angular/core';
+import { IonFab, IonFabButton } from '@ionic/angular';
 
 
 @Directive({
@@ -9,7 +10,7 @@ import { Directive, Renderer, ElementRef, OnInit } from '@angular/core';
 })
 export class AutoHideDirective implements OnInit {
 
-  fabToHide;
+  fabToHide: any;
   oldScrollTop = 0;
 
   constructor(
@@ -24,12 +25,16 @@ export class AutoHideDirective implements OnInit {
 
   logScrolling(e) {
     // logica del fab hide
+    let htmlEle: HTMLElement = this.elementRef.nativeElement;
+    let fab = htmlEle.querySelector('ion-fab-button');
     if (e.detail.scrollTop - this.oldScrollTop > 10) {
       this.renderer.setElementStyle(this.fabToHide, 'opacity', '0');
       this.renderer.setElementStyle(this.fabToHide, 'webkitTransition', 'scaled3d(.1,.1,.1)');
+      fab.disabled = true;
     } else if (e.detail.scrollTop - this.oldScrollTop < 0) {
       this.renderer.setElementStyle(this.fabToHide, 'opacity', '1');
       this.renderer.setElementStyle(this.fabToHide, 'webkitTransition', 'scaled3d(1,1,1)');
+      fab.disabled = false;
     }
     this.oldScrollTop = e.detail.scrollTop;
   }

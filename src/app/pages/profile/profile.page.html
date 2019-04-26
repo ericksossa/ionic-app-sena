@@ -78,7 +78,7 @@
               <img src="../../assets/inicio/av1.jpg">
             </ion-avatar>
             <ion-label>
-              <b>{{post.key}} </b>
+              <b>{{post.user}} </b>
               <p><small>
                   {{post.createAt | date}}
                 </small></p>
@@ -96,7 +96,7 @@
           <ion-button fill="clear" size="small">
             <ion-icon name="pin"></ion-icon>
           </ion-button>
-          <ion-button (click)="likePost()" slot="end" fill="clear" size="small">
+          <ion-button #bouncebtn (click)="likePost()" slot="end" fill="clear" size="small">
             <ion-icon [name]="start"></ion-icon>
           </ion-button>
           <ion-button slot="end" fill="clear" (click)="presentActionSheet(post)">

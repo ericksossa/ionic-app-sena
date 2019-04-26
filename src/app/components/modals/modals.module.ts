@@ -9,8 +9,9 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { NewPostComponent } from './new-post/new-post.component';
 import { EmojiPickerPageModule } from '../emoji-picker/emoji-picker.module';
 import { PipesModule } from 'src/app/pipes/pipes.module';
-// image picker
-import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { MapComponent } from './map/map.component';
+
+
 
 @NgModule({
   imports: [
@@ -23,10 +24,15 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
   declarations: [
     ChatDetailsPage,
     EditProfileComponent,
-    NewPostComponent],
+    NewPostComponent,
+    MapComponent
+  ],
   exports: [
     ChatDetailsPage,
     EditProfileComponent
+  ],
+  entryComponents: [
+    MapComponent
   ]
 })
 export class ModalsModule { }

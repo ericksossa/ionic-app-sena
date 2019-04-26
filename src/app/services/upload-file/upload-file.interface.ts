@@ -1,6 +1,7 @@
 export interface UploadFile {
     description: string;
     img: string;
-    key?: string;
+    user?: string;
+    coords?: any;
     createAt?: string;
 }

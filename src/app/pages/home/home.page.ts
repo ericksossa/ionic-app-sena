@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { UploadFileService } from 'src/app/services/upload-file/upload-file.service';
 import { ToastController, ModalController, ActionSheetController } from '@ionic/angular';
@@ -6,7 +6,8 @@ import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { NewPostComponent } from 'src/app/components/modals/new-post/new-post.component';
-
+import * as Bounce from 'bounce.js';
+import { MapComponent } from 'src/app/components/modals/map/map.component';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,7 @@ import { NewPostComponent } from 'src/app/components/modals/new-post/new-post.co
   styleUrls: ['home.page.scss']
 })
 export class HomePage {
+  @ViewChild('bouncebtn', { read: ElementRef }) bouncebtn: ElementRef;
   start = 'star-outline';
   items: any[] = [];
   likes: number = 0; // TODO
@@ -86,6 +88,30 @@ export class HomePage {
   }
 
   likePost() {
+    let bounce = new Bounce();
+    bounce
+      .translate({
+        from: { x: -300, y: 0 },
+        to: { x: 0, y: 0 },
+        duration: 600,
+        stiffness: 4
+      })
+      .scale({
+        from: { x: 1, y: 1 },
+        to: { x: 0.1, y: 2.3 },
+        easing: "sway",
+        duration: 800,
+        delay: 65,
+        stiffness: 2
+      })
+      .scale({
+        from: { x: 1, y: 1 },
+        to: { x: 5, y: 1 },
+        easing: "sway",
+        duration: 300,
+        delay: 30,
+      })
+      .applyTo(this.bouncebtn.nativeElement);
     this.likes++;
     if (this.likes <= 1) {
       this.start = 'star';
@@ -97,6 +123,15 @@ export class HomePage {
       console.log('Unlike');
       return;
     }
+
+  }
+
+  async openMap(coords: string) {
+    const modal = await this.modalController.create({
+      component: MapComponent,
+      componentProps: { coords: coords }
+    });
+    return await modal.present();
 
   }
 

@@ -15,7 +15,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-progress-bar *ngIf="uploadPost" color="secondary" type="indeterminate"></ion-progress-bar>
+  <ion-progress-bar *ngIf="uploadPost" color="secondary" type="indeterminate"></ion-progress-bar>
   <ion-grid>
     <ion-row>
       <ion-col>
@@ -27,18 +27,34 @@
     </ion-row>
     <ion-row>
       <ion-col>
+        <ion-item>
+          <ion-label>Current location</ion-label>
+          <ion-spinner name="lines-small"
+                        *ngIf="loadGeo"></ion-spinner>
+          <ion-toggle slot="end"
+                      [(ngModel)]="position"
+                      (ionChange)="getGeo()"></ion-toggle>
+        </ion-item>
+
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="6">
         <ion-button shape="round" (click)="takePhoto()">
           Capture
           <ion-icon slot="end" name="camera"></ion-icon>
         </ion-button>
+      </ion-col>
+      <ion-col size="6">
         <ion-button shape="round" (click)="selectPhoto()">
           Select
           <ion-icon slot="end" name="photos"></ion-icon>
         </ion-button>
-        <ion-item *ngIf="imagePreview">
-          <img [src]="imagePreview">
-        </ion-item>
       </ion-col>
+      <ion-item *ngIf="imagePreview">
+        <img [src]="imagePreview">
+      </ion-item>
     </ion-row>
   </ion-grid>
 </ion-content>

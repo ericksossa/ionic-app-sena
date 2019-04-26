@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker/ngx';
 import { UploadFileService } from 'src/app/services/upload-file/upload-file.service';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @Component({
   selector: 'app-new-post',
@@ -11,6 +11,9 @@ import { UploadFileService } from 'src/app/services/upload-file/upload-file.serv
 })
 export class NewPostComponent implements OnInit {
   description: string = '';
+  position: false;
+  coords: string;
+  loadGeo = false;
   imagePreview: any = '';
   image64: string;
   uploadPost: boolean = false;
@@ -18,7 +21,7 @@ export class NewPostComponent implements OnInit {
     protected modalController: ModalController,
     private camera: Camera,
     private toastController: ToastController,
-    private imagePicker: ImagePicker,
+    private geolocation: Geolocation,
     private _uploadFile: UploadFileService) { }
 
   ngOnInit() {
@@ -65,8 +68,9 @@ export class NewPostComponent implements OnInit {
   newPost() {
     this.uploadPost = true;
     let file = {
+      description: this.description,
       img: this.image64,
-      description: this.description
+      coords: this.coords,
     };
 
     this._uploadFile.uploadImageFirebase(file)
@@ -79,6 +83,24 @@ export class NewPostComponent implements OnInit {
         this.uploadPost = false;
       });
 
+  }
+
+  getGeo() {
+
+    if (!this.position) {
+      this.coords = null;
+      return;
+    }
+
+    this.loadGeo = true;
+
+    this.geolocation.getCurrentPosition().then((resp) => {
+      this.coords = `${resp.coords.latitude}, ${resp.coords.longitude}`;
+      console.log(this.coords);
+      this.loadGeo = false;
+    }).catch((error) => {
+      this.loadGeo = false;
+    });
 
   }
 

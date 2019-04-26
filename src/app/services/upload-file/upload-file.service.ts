@@ -63,7 +63,7 @@ export class UploadFileService {
           uploadTask.snapshot.ref.getDownloadURL()
             .then((downloadURL) => {
               let url = downloadURL;
-              this.createPost(file.description, url);
+              this.createPost(file.description, url, file.coords);
               resolve();
             });
         }
@@ -111,12 +111,13 @@ export class UploadFileService {
     this.store.dispatch(new UnsetItemsAction());
   }
 
-  private createPost(description: string, url: string) {
+  private createPost(description: string, url: string, coords: string) {
 
     let post: UploadFile = {
-      img: url,
       description: description,
-      key: this.userName,
+      img: url,
+      user: this.userName,
+      coords: coords,
       createAt: new Date().toString(),
     };
 

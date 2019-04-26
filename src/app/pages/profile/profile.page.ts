@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 
 import { ModalController, IonSegment } from '@ionic/angular';
 import { EditProfileComponent } from 'src/app/components/modals/edit-profile/edit-profile.component';
@@ -13,6 +13,7 @@ import { UploadFile } from 'src/app/services/upload-file/upload-file.interface';
 import { ActionSheetController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import * as Bounce from 'bounce.js';
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +22,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 })
 export class ProfilePage implements OnInit, OnDestroy {
   @ViewChild(IonSegment) segment: IonSegment;
+  @ViewChild('bouncebtn', { read: ElementRef }) bouncebtn: ElementRef;
   galleryType = 'grid';
   start = 'star-outline';
   likes: number = 0; // TODO
@@ -137,6 +139,30 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   likePost() {
+    let bounce = new Bounce();
+    bounce
+      .translate({
+        from: { x: -300, y: 0 },
+        to: { x: 0, y: 0 },
+        duration: 600,
+        stiffness: 4
+      })
+      .scale({
+        from: { x: 1, y: 1 },
+        to: { x: 0.1, y: 2.3 },
+        easing: "sway",
+        duration: 800,
+        delay: 65,
+        stiffness: 2
+      })
+      .scale({
+        from: { x: 1, y: 1 },
+        to: { x: 5, y: 1 },
+        easing: "sway",
+        duration: 300,
+        delay: 30,
+      })
+      .applyTo(this.bouncebtn.nativeElement);
     this.likes++;
     if (this.likes <= 1) {
       this.start = 'star';

@@ -17,4 +17,4 @@ import { AutoHideDirective } from '../../directives/auto-hide.directive';
   ],
   declarations: [HomePage, AutoHideDirective]
 })
-export class HomePageModule {}
+export class HomePageModule { }
