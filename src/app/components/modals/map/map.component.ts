@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { NavParams, LoadingController } from '@ionic/angular';
+import { NavParams, LoadingController, ModalController } from '@ionic/angular';
 
 declare var mapboxgl: any;
 
@@ -12,6 +12,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   coord: string;
   constructor(
     private navParams: NavParams,
+    protected modalController: ModalController,
     private loadingController: LoadingController) { }
 
   ngOnInit() {

@@ -10,6 +10,7 @@ import { NewPostComponent } from './new-post/new-post.component';
 import { EmojiPickerPageModule } from '../emoji-picker/emoji-picker.module';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { MapComponent } from './map/map.component';
+import { PopInfoComponent } from './pop-info/pop-info.component';
 
 
 
@@ -25,7 +26,8 @@ import { MapComponent } from './map/map.component';
     ChatDetailsPage,
     EditProfileComponent,
     NewPostComponent,
-    MapComponent
+    MapComponent,
+    PopInfoComponent
   ],
   exports: [
     ChatDetailsPage,

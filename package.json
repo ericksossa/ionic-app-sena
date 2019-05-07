@@ -54,6 +54,8 @@
     "es6-promise-plugin": "4.2.2",
     "firebase": "^5.9.1",
     "gl-ionic-background-video": "0.0.5",
+    "intl-tel-input": "^15.0.2",
+    "ng2-tel-input": "^2.0.1",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.29"
   },

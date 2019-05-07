@@ -1,13 +1,14 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { UploadFileService } from 'src/app/services/upload-file/upload-file.service';
-import { ToastController, ModalController, ActionSheetController } from '@ionic/angular';
+import { ToastController, ModalController, ActionSheetController, AlertController, PopoverController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { NewPostComponent } from 'src/app/components/modals/new-post/new-post.component';
 import * as Bounce from 'bounce.js';
 import { MapComponent } from 'src/app/components/modals/map/map.component';
+import { PopInfoComponent } from '../../components/modals/pop-info/pop-info.component';
 
 @Component({
   selector: 'app-home',
@@ -25,6 +26,8 @@ export class HomePage {
     private authService: AuthService,
     private uploadFileService: UploadFileService,
     public toastController: ToastController,
+    public alertController: AlertController,
+    public popoverController: PopoverController,
     public actionSheetController: ActionSheetController,
     private modalController: ModalController) {
     this.subscription = this.store.select('uploadFile')
@@ -42,7 +45,7 @@ export class HomePage {
         role: 'destructive',
         icon: 'trash',
         handler: () => {
-          // this.presentAlertConfirm(item);
+          this.presentAlertConfirm(item);
         }
       }, {
         text: 'Share',
@@ -87,31 +90,19 @@ export class HomePage {
       });
   }
 
+  async presentPopover(ev: any) {
+    console.log(ev);
+
+    const popover = await this.popoverController.create({
+      component: PopInfoComponent,
+      event: ev,
+      // translucent: true,
+      mode: 'ios'
+    });
+    return await popover.present();
+  }
+
   likePost() {
-    let bounce = new Bounce();
-    bounce
-      .translate({
-        from: { x: -300, y: 0 },
-        to: { x: 0, y: 0 },
-        duration: 600,
-        stiffness: 4
-      })
-      .scale({
-        from: { x: 1, y: 1 },
-        to: { x: 0.1, y: 2.3 },
-        easing: "sway",
-        duration: 800,
-        delay: 65,
-        stiffness: 2
-      })
-      .scale({
-        from: { x: 1, y: 1 },
-        to: { x: 5, y: 1 },
-        easing: "sway",
-        duration: 300,
-        delay: 30,
-      })
-      .applyTo(this.bouncebtn.nativeElement);
     this.likes++;
     if (this.likes <= 1) {
       this.start = 'star';
@@ -140,6 +131,37 @@ export class HomePage {
       component: NewPostComponent
     });
     return await modal.present();
+  }
+
+  async presentAlertConfirm(item: any) {
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      mode: 'ios',
+      message: '<strong>Are you sure you want to delete this picture?</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            this.deleteItem(item);
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  deleteItem(item: any) {
+    this.uploadFileService.deletePost(item.uid)
+      .then();
   }
 
   async presentToast(message: string) {

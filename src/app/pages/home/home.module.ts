@@ -6,12 +6,18 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 import { PipesModule } from '../../pipes/pipes.module';
 import { AutoHideDirective } from '../../directives/auto-hide.directive';
+import { PopInfoComponent } from '../../components/modals/pop-info/pop-info.component';
+import { ModalsModule } from 'src/app/components/modals/modals.module';
 
 @NgModule({
+  entryComponents: [
+    PopInfoComponent
+  ],
   imports: [
     IonicModule,
     CommonModule,
     PipesModule,
+    ModalsModule,
     FormsModule,
     RouterModule.forChild([{ path: '', component: HomePage }])
   ],

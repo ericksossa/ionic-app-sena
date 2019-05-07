@@ -111,7 +111,7 @@ export class UploadFileService {
     this.store.dispatch(new UnsetItemsAction());
   }
 
-  private createPost(description: string, url: string, coords: string) {
+  private createPost(description: string, url: string, coords?: string) {
 
     let post: UploadFile = {
       description: description,

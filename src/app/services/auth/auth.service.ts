@@ -53,7 +53,7 @@ export class AuthService {
     });
   }
   // register
-  signIn(name: string, email: string, password: string) {
+  signIn(name: string, email: string, password: string, phone: string) {
     this.store.dispatch(new ActivateLoadingAction());
     return this.afAuth.auth
       .createUserWithEmailAndPassword(email, password)
@@ -61,6 +61,7 @@ export class AuthService {
         const user: User = {
           name: name,
           email: resp.user.email,
+          phone: phone,
           uid: resp.user.uid,
         };
         this.afDB.doc(`${user.uid}/user`)

@@ -4,11 +4,12 @@
     <div class="content">
       <h1> <b> {{item.title | uppercase}} </b> </h1>
       <h5 [innerHTML]="item.content"></h5>
-      <div class="buttons-container">
-        <ion-button routerLink="/login" shape="round" size="small" color="primary">
-          <ion-icon name="arrow-round-forward"></ion-icon>
-        </ion-button>
-      </div>
+
+      <ion-fab vertical="bottom" horizontal="end">
+        <ion-fab-button routerLink="/login" color="light">
+          <ion-icon color="tertiary" name="arrow-round-forward"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
     </div>
   </div>
 </ion-content>

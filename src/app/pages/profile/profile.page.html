@@ -93,12 +93,14 @@
           <p>{{post.description | titlecase}}</p>
         </ion-card-content>
         <ion-item>
-          <ion-button fill="clear" size="small">
+          <ion-button (click)="openMap(post.coords)" fill="clear" size="small">
             <ion-icon name="pin"></ion-icon>
           </ion-button>
           <ion-button #bouncebtn (click)="likePost()" slot="end" fill="clear" size="small">
             <ion-icon [name]="start"></ion-icon>
+            <p *ngIf="likes > 0">{{likes}}</p>
           </ion-button>
+      
           <ion-button slot="end" fill="clear" (click)="presentActionSheet(post)">
             <ion-icon name="ios-more"></ion-icon>
           </ion-button>

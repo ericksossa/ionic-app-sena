@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, QueryList, ViewChildren } from '@angular/core';
 
 import { ModalController, IonSegment } from '@ionic/angular';
 import { EditProfileComponent } from 'src/app/components/modals/edit-profile/edit-profile.component';
@@ -14,6 +14,7 @@ import { ActionSheetController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import * as Bounce from 'bounce.js';
+import { MapComponent } from 'src/app/components/modals/map/map.component';
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +23,7 @@ import * as Bounce from 'bounce.js';
 })
 export class ProfilePage implements OnInit, OnDestroy {
   @ViewChild(IonSegment) segment: IonSegment;
-  @ViewChild('bouncebtn', { read: ElementRef }) bouncebtn: ElementRef;
+  @ViewChildren('bouncebtn', { read: ElementRef }) bouncebtn: QueryList<ElementRef>;
   galleryType = 'grid';
   start = 'star-outline';
   likes: number = 0; // TODO
@@ -64,6 +65,15 @@ export class ProfilePage implements OnInit, OnDestroy {
       component: NewPostComponent
     });
     return await modal.present();
+  }
+
+  async openMap(coords: string) {
+    const modal = await this.modalController.create({
+      component: MapComponent,
+      componentProps: { coords: coords }
+    });
+    return await modal.present();
+
   }
 
   async editProfile() {
@@ -130,7 +140,8 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   public shareWhatsapp(item: any) {
-    this.socialSharing.share(item.description, null, item.img)
+
+    this.socialSharing.share(item.description, item.img, item.img)
       .then(() => {
 
       }).catch((err) => {
@@ -139,30 +150,6 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   likePost() {
-    let bounce = new Bounce();
-    bounce
-      .translate({
-        from: { x: -300, y: 0 },
-        to: { x: 0, y: 0 },
-        duration: 600,
-        stiffness: 4
-      })
-      .scale({
-        from: { x: 1, y: 1 },
-        to: { x: 0.1, y: 2.3 },
-        easing: "sway",
-        duration: 800,
-        delay: 65,
-        stiffness: 2
-      })
-      .scale({
-        from: { x: 1, y: 1 },
-        to: { x: 5, y: 1 },
-        easing: "sway",
-        duration: 300,
-        delay: 30,
-      })
-      .applyTo(this.bouncebtn.nativeElement);
     this.likes++;
     if (this.likes <= 1) {
       this.start = 'star';
@@ -174,7 +161,7 @@ export class ProfilePage implements OnInit, OnDestroy {
       console.log('Unlike');
       return;
     }
-
+    return;
   }
 
   deleteItem(item: any) {

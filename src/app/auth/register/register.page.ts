@@ -7,6 +7,7 @@ import { AppState } from 'src/app/app.reducer';
 import { ToastController } from '@ionic/angular';
 import { DesactivateLoadingAction } from '../ui.actions';
 import { LoginPage } from '../login/login.page';
+import { LocationsService } from '../../services/locations/locations.service';
 
 @Component({
   selector: 'app-register',
@@ -38,12 +39,16 @@ export class RegisterPage implements OnInit, OnDestroy {
   registerForm: FormGroup;
   subscription: Subscription = new Subscription();
   constructor(
+    private locatiService: LocationsService,
     private loginPage: LoginPage,
     private authService: AuthService,
     private toastController: ToastController,
     private formBuilder: FormBuilder,
     public store: Store<AppState>) {
     this.createFormsControl();
+    this.locatiService.getCities('medellin')
+      .subscribe(data => console.log(data));
+
   }
 
   ngOnInit() {
@@ -71,15 +76,45 @@ export class RegisterPage implements OnInit, OnDestroy {
         Validators.email,
         Validators.minLength(6),
         Validators.maxLength(50),
+      ])),
+      phone: new FormControl('', Validators.compose([
+        Validators.required,
       ]))
     });
 
   }
 
+  selectAvatar() {
+
+  }
+
+  telInputObject(obj) {
+    // console.log(obj);
+    obj.setCountry('co');
+
+  }
+
+  onCountryChange(e) {
+    console.log(e);
+  }
+
+  getNumber(e) {
+    console.log(e);
+    this.registerForm.value.phone = e;
+  }
+
+  hasError(e) {
+    console.log(e);
+
+  }
+
   onSubmit() {
-    this.authService.signIn(this.registerForm.value.name,
+    this.authService.signIn(
+      this.registerForm.value.name,
       this.registerForm.value.email,
-      this.registerForm.value.password)
+      this.registerForm.value.password,
+      this.registerForm.value.phone
+    )
       .then(() => this.loginPage.goSignIn())
       .catch((err) => {
         this.store.dispatch(new DesactivateLoadingAction());
