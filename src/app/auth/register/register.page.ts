@@ -8,6 +8,7 @@ import { ToastController } from '@ionic/angular';
 import { DesactivateLoadingAction } from '../ui.actions';
 import { LoginPage } from '../login/login.page';
 import { LocationsService } from '../../services/locations/locations.service';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 @Component({
   selector: 'app-register',
@@ -36,6 +37,9 @@ export class RegisterPage implements OnInit, OnDestroy {
     ]
 
   };
+  private list: string[] = [];
+  public input: string = '';
+  public countries: string[] = [];
   registerForm: FormGroup;
   subscription: Subscription = new Subscription();
   constructor(
@@ -43,11 +47,10 @@ export class RegisterPage implements OnInit, OnDestroy {
     private loginPage: LoginPage,
     private authService: AuthService,
     private toastController: ToastController,
+    private keyboard: Keyboard,
     private formBuilder: FormBuilder,
     public store: Store<AppState>) {
     this.createFormsControl();
-    this.locatiService.getCities('medellin')
-      .subscribe(data => console.log(data));
 
   }
 
@@ -56,6 +59,28 @@ export class RegisterPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  add(item: string) {
+    this.input = item;
+    this.countries = [];
+  }
+
+  removeFocus() {
+    this.keyboard.hide();
+  }
+
+  findLocation(e) {
+    if (e.detail.value.length < 3) {
+      return;
+    }
+
+    this.locatiService.getCities(e.detail.value)
+      .subscribe((data: any) => {
+        this.list = data._body;
+      });
+
+    this.countries = this.list.filter(item => item.toUpperCase().includes(this.input.toUpperCase()));
   }
 
   createFormsControl() {
@@ -79,6 +104,9 @@ export class RegisterPage implements OnInit, OnDestroy {
       ])),
       phone: new FormControl('', Validators.compose([
         Validators.required,
+      ])),
+      location: new FormControl('', Validators.compose([
+        Validators.required,
       ]))
     });
 
@@ -99,7 +127,6 @@ export class RegisterPage implements OnInit, OnDestroy {
   }
 
   getNumber(e) {
-    console.log(e);
     this.registerForm.value.phone = e;
   }
 

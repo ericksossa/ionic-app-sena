@@ -5,7 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { RegisterPage } from './register.page';
-import {Ng2TelInputModule} from 'ng2-tel-input';
+import { Ng2TelInputModule } from 'ng2-tel-input';
+
 
 @NgModule({
   imports: [

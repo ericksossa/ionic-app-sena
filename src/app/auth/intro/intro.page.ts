@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-intro',
@@ -14,7 +13,7 @@ export class IntroPage implements OnInit {
       content: 'Each of us has a way of traveling. <br>Every sees the word in a special and unique way. '
     }
   ];
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit() {
   }

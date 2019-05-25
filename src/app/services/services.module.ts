@@ -4,13 +4,14 @@ import { AuthService } from './auth/auth.service';
 import { UploadFileService } from './upload-file/upload-file.service';
 import { ChatService } from './chat/chat.service';
 import { LocationsService } from './locations/locations.service';
-import { JsonpModule } from '@angular/http';
+import { JsonpModule, HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    JsonpModule
+    JsonpModule,
+    HttpModule
   ],
   providers: [
     AuthService,

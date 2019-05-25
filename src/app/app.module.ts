@@ -30,7 +30,7 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -56,6 +56,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
     AngularFireDatabase,
     SocialSharing,
     Geolocation,
+    Keyboard,
     Camera,
     ScreenOrientation,
     ImagePicker,
