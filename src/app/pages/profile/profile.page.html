@@ -13,7 +13,7 @@
   <ion-grid fixed>
     <ion-row>
       <ion-col>
-        <img class="pic_profile" src="../../assets/inicio/av1.jpg">
+        <img class="pic_profile" src="../../assets/inicio/{{avatar}}">
       </ion-col>
       <ion-col>
         <h1>{{userName}}</h1>
@@ -75,7 +75,7 @@
         <ion-item>
           <ion-chip slot="start" color="primary">
             <ion-avatar>
-              <img src="../../assets/inicio/av1.jpg">
+              <img src="../../assets/inicio/{{post.userAvatar}}">
             </ion-avatar>
             <ion-label>
               <b>{{post.user}} </b>

@@ -29,6 +29,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   likes: number = 0; // TODO
   userName: string;
   location: string;
+  avatar: string;
   items: any[] = [];
   subscription: Subscription;
   constructor(
@@ -51,6 +52,9 @@ export class ProfilePage implements OnInit, OnDestroy {
       .subscribe(auth => {
         this.userName = auth.user.name;
         this.location = auth.user.location;
+        console.log(auth.user.avatar);
+
+        this.avatar = auth.user.avatar;
       });
     // valor por defecto del IonSegment
     this.segment.value = 'grid';

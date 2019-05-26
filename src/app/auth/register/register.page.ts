@@ -16,6 +16,22 @@ import { Keyboard } from '@ionic-native/keyboard/ngx';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit, OnDestroy {
+  avatars = [
+    {
+      img: 'av-1.png',
+      select: true
+    },
+    {
+      img: 'av-2.png',
+      select: false
+    }
+
+  ];
+  avatarSel = 'av-1.png';
+
+  avatarSlide = {
+    slidesPerView: 2.0
+  };
   errorMessages = {
     'email': [
       { type: 'required', message: 'Email is required.' },
@@ -111,6 +127,11 @@ export class RegisterPage implements OnInit, OnDestroy {
 
   }
 
+  selectAvatar(avatar) {
+    this.avatars.forEach(av => av.select = false);
+    this.avatarSel = avatar.img;
+    avatar.select = true;
+  }
 
   telInputObject(obj) {
     // console.log(obj);
@@ -137,9 +158,9 @@ export class RegisterPage implements OnInit, OnDestroy {
       this.registerForm.value.email,
       this.registerForm.value.password,
       this.registerForm.value.phone,
-      this.registerForm.value.location
-    )
-      .then(() => this.loginPage.goSignIn())
+      this.registerForm.value.location,
+      this.avatarSel
+    ).then(() => this.loginPage.goSignIn())
       .catch((err) => {
         this.store.dispatch(new DesactivateLoadingAction());
         this.showError('Error: ' + err.message);

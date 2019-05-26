@@ -4,8 +4,6 @@
     text-align: center;
 }
 
-
-
 .mainSlide,
 .mainSlide ion-slide {
     width: 100%;
@@ -26,7 +24,7 @@ img {
     opacity: 0.3;
 }
 
-.pick-avatar-seleccionado {
+.pick-avatar-select {
     transition: opacity 0.5s linear;
     opacity: 1 !important;
 }

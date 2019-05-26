@@ -143,6 +143,7 @@ export class UploadFileService {
   private createPost(description: string, url: string, fileName: string, coords?: string) {
 
     let post: UploadFile = {
+      userAvatar: this.authService.getUsuario().avatar,
       description: description,
       img: url,
       user: this.userName,

@@ -8,7 +8,7 @@ import { ChatDetailsPage } from 'src/app/components/modals/chat-details/chat-det
   styleUrls: ['chat.page.scss']
 })
 export class ChatPage {
-  name = 'Mbappe';
+  name = 'test';
   constructor(private modalController: ModalController) { }
 
   async openChat(name: any) {

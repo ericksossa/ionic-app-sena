@@ -1,3 +1,21 @@
+     <ion-row>
+       <ion-col>
+         <h3>Select Avatar</h3>
+       </ion-col>
+     </ion-row>
+
+     <ion-row>
+       <ion-col>
+         <ion-slides [options]="avatarSlide">
+           <ion-slide *ngFor="let avatar of avatars">
+             <ion-img class="pick-avatar" src="/assets/inicio/{{avatar.img}}"
+                      [ngClass]="{'pick-avatar-select': avatar.select}"
+                      (click)="selectAvatar(avatar)"></ion-img>
+           </ion-slide>
+         </ion-slides>
+       </ion-col>
+     </ion-row>
+
      <form [formGroup]="registerForm">
        <ion-row>
          <ion-col>

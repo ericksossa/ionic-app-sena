@@ -3,6 +3,7 @@ export class User {
     public email: string;
     public phone: string;
     public location: string;
+    public avatar: string;
     public uid: string;
 
     constructor(obj: DataObj) {
@@ -11,6 +12,7 @@ export class User {
         this.email = obj && obj.email || null;
         this.phone = obj && obj.phone || null;
         this.location = obj && obj.location || null;
+        this.avatar = obj && obj.avatar || null;
     }
 }
 
@@ -20,4 +22,5 @@ interface DataObj {
     name: string;
     phone: string;
     location: string;
+    avatar: string;
 }

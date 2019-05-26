@@ -8,8 +8,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
-import { Camera } from '@ionic-native/camera/ngx';
+// storage
+import { IonicStorageModule } from '@ionic/storage';
 // ngrx
 import { appReducers } from './app.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -27,17 +27,20 @@ import { ServicesModule } from './services/services.module';
 import { PipesModule } from './pipes/pipes.module';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 // plugins
+import { Camera } from '@ionic-native/camera/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
     AppRoutingModule,
+    IonicModule.forRoot(),
+    IonicStorageModule.forRoot(),
     StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
