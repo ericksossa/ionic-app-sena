@@ -51,7 +51,7 @@
             <ion-icon [name]="start"></ion-icon>
             <p *ngIf="likes > 0">{{likes}}</p>
           </ion-button>
-          <ion-button slot="end" fill="clear" (click)="presentActionSheet(post)">
+          <ion-button *ngIf="post.user == auth" slot="end" fill="clear" (click)="presentActionSheet(post)">
             <ion-icon name="ios-more"></ion-icon>
           </ion-button>
         </ion-item>
@@ -59,10 +59,10 @@
     </ion-col>
   </ion-row>
   <!-- scroll infinito -->
-  <!-- <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
     </ion-infinite-scroll-content>
-  </ion-infinite-scroll> -->
+  </ion-infinite-scroll>
   <!-- /scroll infinito -->
 
   <!-- botón de fab -->

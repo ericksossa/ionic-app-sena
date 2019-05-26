@@ -12,11 +12,22 @@
 <ion-content padding>
 
   <ion-grid>
+
     <ion-row>
-      <ion-col size="12">
-        <ion-img class="pick-avatar" src="../../assets/inicio/av.png"></ion-img>
+      <ion-col>
+        <h3>Select Avatar</h3>
       </ion-col>
     </ion-row>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col align-self: center size="7" text-center>
+        <ion-img class="pick-avatar" src="../../assets/inicio/av.png"></ion-img>
+        <ion-fab-button (click)="selectAvatar()" class="fab-button" color="dark">
+          <ion-icon name="camera"></ion-icon>
+        </ion-fab-button>
+      </ion-col>
+    </ion-row>
+
 
 
     <form>

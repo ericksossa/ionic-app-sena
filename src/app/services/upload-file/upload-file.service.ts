@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { UploadFile } from './upload-file.interface';
 import { map, filter } from 'rxjs/operators';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from '../auth/auth.service';
 import { AppState } from 'src/app/app.reducer';
 import { Store } from '@ngrx/store';
@@ -18,12 +19,13 @@ export class UploadFileService {
   subscription: Subscription;
   userName: any;
   images: any[] = [];
-  lastKey: string = null;
+  lastKey: string = '';
   constructor(
     private afDB: AngularFirestore,
+    private angularDataBase: AngularFireDatabase,
     private authService: AuthService,
     private store: Store<AppState>) {
-    // this.uploadLastFile().subscribe(() => this.getImages());
+    this.uploadLastFile().subscribe(() => this.getImages());
     this.subscription = this.store.select('auth')
       .pipe(filter(auth => auth.user != null))
       .subscribe(auth => this.userName = auth.user.name);
@@ -34,7 +36,7 @@ export class UploadFileService {
       .pipe(
         filter(auth => auth.user != null)
       )
-      .subscribe(auth => this.getImages(auth.user.uid));
+      .subscribe(auth => this.getUserImages(auth.user.uid));
 
   }
 
@@ -63,7 +65,7 @@ export class UploadFileService {
           uploadTask.snapshot.ref.getDownloadURL()
             .then((downloadURL) => {
               let url = downloadURL;
-              this.createPost(file.description, url, file.coords);
+              this.createPost(file.description, url, fileName, file.coords);
               resolve();
             });
         }
@@ -75,16 +77,43 @@ export class UploadFileService {
 
   private uploadLastFile() {
     // carga la ultima key
-    // return this.afDB.list('/post', ref => ref.orderByKey().limitToLast(1))
-    //   .valueChanges()
-    //   .pipe(map((post: any) => {
-    //     this.lastKey = post[0].key;
-    //     this.images.push(post[0]);
-    //   }));
+    return this.angularDataBase.list('/post', ref => ref.orderByKey().limitToLast(1))
+      .valueChanges()
+      .pipe(map((post: any) => {
+        this.lastKey = post[0].key;
+        this.images.push(post[0]);
+      }));
 
   }
 
-  getImages(uid?: string) {
+  getImages() {
+    // obtiene todas las imagenes de todos los user desc
+    return new Promise((resolve, reject) => {
+      this.angularDataBase.list('/post',
+        ref => ref.limitToLast(3)
+          .orderByKey()
+          .endAt(this.lastKey)
+      ).valueChanges()
+        .subscribe((posts: any[]) => {
+          posts.pop();
+
+          if (posts.length === 0) {
+            resolve(false);
+          }
+
+          this.lastKey = posts[0].key;
+
+          for (let i = posts.length - 1; i >= 0; i--) {
+            let post = posts[i];
+            this.images.push(post);
+          }
+
+          resolve(true);
+        });
+    });
+  }
+
+  getUserImages(uid?: string) {
     return new Promise((resolve, reject) => {
       this.postItemsSubcription = this.afDB.collection(`${uid}/post/items`)
         .snapshotChanges()
@@ -99,7 +128,7 @@ export class UploadFileService {
           })
         ).subscribe((coleccion: any[]) => {
           this.store.dispatch(new SetItemsAction(coleccion));
-          this.images.push(coleccion);
+          // this.images.push(coleccion);
           resolve(true);
         });
     });
@@ -111,18 +140,20 @@ export class UploadFileService {
     this.store.dispatch(new UnsetItemsAction());
   }
 
-  private createPost(description: string, url: string, coords?: string) {
+  private createPost(description: string, url: string, fileName: string, coords?: string) {
 
     let post: UploadFile = {
       description: description,
       img: url,
       user: this.userName,
       coords: coords,
+      key: fileName,
       createAt: new Date().toString(),
     };
 
     this.afDB.doc(`${this.authService.getUsuario().uid}/post`)
       .collection('items').add({ ...post });
+    this.angularDataBase.object(`/post/${fileName}`).update(post);
     this.images.push(post);
   }
 

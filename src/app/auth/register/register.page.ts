@@ -38,7 +38,7 @@ export class RegisterPage implements OnInit, OnDestroy {
 
   };
   private list: string[] = [];
-  public input: string = '';
+  public input = '';
   public countries: string[] = [];
   registerForm: FormGroup;
   subscription: Subscription = new Subscription();
@@ -51,7 +51,6 @@ export class RegisterPage implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     public store: Store<AppState>) {
     this.createFormsControl();
-
   }
 
   ngOnInit() {
@@ -112,9 +111,6 @@ export class RegisterPage implements OnInit, OnDestroy {
 
   }
 
-  selectAvatar() {
-
-  }
 
   telInputObject(obj) {
     // console.log(obj);
@@ -140,7 +136,8 @@ export class RegisterPage implements OnInit, OnDestroy {
       this.registerForm.value.name,
       this.registerForm.value.email,
       this.registerForm.value.password,
-      this.registerForm.value.phone
+      this.registerForm.value.phone,
+      this.registerForm.value.location
     )
       .then(() => this.loginPage.goSignIn())
       .catch((err) => {

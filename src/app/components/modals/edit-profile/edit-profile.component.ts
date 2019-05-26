@@ -17,4 +17,8 @@ export class EditProfileComponent implements OnInit {
     this.modalController.dismiss();
   }
 
+  selectAvatar() {
+
+  }
+
 }

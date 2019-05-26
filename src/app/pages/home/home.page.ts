@@ -9,6 +9,7 @@ import { NewPostComponent } from 'src/app/components/modals/new-post/new-post.co
 import * as Bounce from 'bounce.js';
 import { MapComponent } from 'src/app/components/modals/map/map.component';
 import { PopInfoComponent } from '../../components/modals/pop-info/pop-info.component';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +20,7 @@ export class HomePage {
   @ViewChild('bouncebtn', { read: ElementRef }) bouncebtn: ElementRef;
   start = 'star-outline';
   items: any[] = [];
+  auth: any;
   likes: number = 0; // TODO
   subscription: Subscription = new Subscription();
   constructor(
@@ -30,12 +32,12 @@ export class HomePage {
     public popoverController: PopoverController,
     public actionSheetController: ActionSheetController,
     private modalController: ModalController) {
-    this.subscription = this.store.select('uploadFile')
-      .subscribe(resp => {
-        this.items = resp.items;
-      });
-
+    this.subscription = this.store.select('auth')
+      .pipe(filter(auth => auth.user != null))
+      .subscribe(auth => this.auth = auth.user.name);
+    this.items = this.uploadFileService.images;
   }
+
   async presentActionSheet(item: any) {
     const actionSheet = await this.actionSheetController.create({
       header: 'Options',
@@ -77,6 +79,8 @@ export class HomePage {
     // logica del scroll infinite
     this.uploadFileService.getImages()
       .then((resp: boolean) => {
+        console.log(resp);
+
         if (event) {
           event.target.complete();
 

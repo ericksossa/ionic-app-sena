@@ -12,7 +12,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 export class NewPostComponent implements OnInit {
   description: string = '';
   position: false;
-  coords: string;
+  coords = '';
   loadGeo = false;
   imagePreview: any = '';
   image64: string;

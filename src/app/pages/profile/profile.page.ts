@@ -28,6 +28,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   start = 'star-outline';
   likes: number = 0; // TODO
   userName: string;
+  location: string;
   items: any[] = [];
   subscription: Subscription;
   constructor(
@@ -47,7 +48,10 @@ export class ProfilePage implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.store.select('auth')
       .pipe(filter(auth => auth.user != null))
-      .subscribe(auth => this.userName = auth.user.name);
+      .subscribe(auth => {
+        this.userName = auth.user.name;
+        this.location = auth.user.location;
+      });
     // valor por defecto del IonSegment
     this.segment.value = 'grid';
   }
