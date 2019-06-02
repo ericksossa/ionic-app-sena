@@ -52,8 +52,6 @@ export class ProfilePage implements OnInit, OnDestroy {
       .subscribe(auth => {
         this.userName = auth.user.name;
         this.location = auth.user.location;
-        console.log(auth.user.avatar);
-
         this.avatar = auth.user.avatar;
       });
     // valor por defecto del IonSegment
@@ -173,8 +171,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   deleteItem(item: any) {
-    this.uploadService.deletePost(item.uid)
-      .then();
+    this.uploadService.deletePost(item);
   }
 
   onLogout() {

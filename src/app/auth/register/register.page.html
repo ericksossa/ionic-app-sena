@@ -8,9 +8,8 @@
        <ion-col>
          <ion-slides [options]="avatarSlide">
            <ion-slide *ngFor="let avatar of avatars">
-             <ion-img class="pick-avatar" src="/assets/inicio/{{avatar.img}}"
-                      [ngClass]="{'pick-avatar-select': avatar.select}"
-                      (click)="selectAvatar(avatar)"></ion-img>
+             <ion-img class="pick-avatar" src="assets/inicio/{{avatar.img}}"
+               [ngClass]="{'pick-avatar-select': avatar.select}" (click)="selectAvatar(avatar)"></ion-img>
            </ion-slide>
          </ion-slides>
        </ion-col>
@@ -65,8 +64,17 @@
              <input style="border:none" ng2TelInput [ng2TelInputOptions]="{'preferredCountries': ['co','us','es']}"
                (hasError)="hasError($event)" (ng2TelOutput)="getNumber($event)"
                (intlTelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)"
-               formControlName="phone" name="phone">
+               formControlName="phone" type="tel" name="phone">
            </ion-item>
+           <div class="error-messages">
+             <ng-container *ngFor="let error of errorMessages.phone">
+               <div class="error-messages" *ngIf="registerForm.get('phone').hasError(error.type) 
+                                                 && (registerForm.get('phone').dirty 
+                                                 || registerForm.get('phone').touched) ">
+                 {{error.message}}
+               </div>
+             </ng-container>
+           </div>
 
            <div class="autocomplete">
              <ion-item>
@@ -79,10 +87,17 @@
                <ion-item *ngFor="let country of countries" (click)="add(country)">
                  {{country}}
                </ion-item>
+               <div class="error-messages">
+                <ng-container *ngFor="let error of errorMessages.location">
+                  <div class="error-messages" *ngIf="registerForm.get('location').hasError(error.type) 
+                                                    && (registerForm.get('location').dirty 
+                                                    || registerForm.get('location').touched) ">
+                    {{error.message}}
+                  </div>
+                </ng-container>
+              </div>
              </ion-list>
            </div>
-
-
          </ion-col>
        </ion-row>
        <!-- /inputs -->

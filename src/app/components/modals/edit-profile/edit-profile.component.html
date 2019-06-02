@@ -14,15 +14,15 @@
   <ion-grid>
 
     <ion-row>
-      <ion-col>
+      <ion-col text-center>
         <h3>Select Avatar</h3>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col></ion-col>
-      <ion-col align-self: center size="7" text-center>
-        <ion-img class="pick-avatar" src="../../assets/inicio/av-1.png"></ion-img>
-        <ion-fab-button (click)="selectAvatar()" class="fab-button" color="dark">
+      <!-- <ion-col></ion-col> -->
+      <ion-col text-center>
+        <img class="pick-avatar" [src]="imagePreview">
+        <ion-fab-button text-center (click)="selectAvatar($event)" class="fab-button" color="dark">
           <ion-icon name="camera"></ion-icon>
         </ion-fab-button>
       </ion-col>
@@ -47,6 +47,11 @@
               <ion-label position="floating">Description</ion-label>
               <ion-textarea rows="2" cols="10"></ion-textarea>
             </ion-item>
+            
+            <ion-item>
+              <ion-label position="floating">Phone</ion-label>
+              <ion-input type="text" name="phone"></ion-input>
+            </ion-item>
 
             <ion-item>
               <ion-label>Gender</ion-label>
@@ -57,10 +62,18 @@
             </ion-item>
 
 
+
           </ion-list>
         </ion-col>
       </ion-row>
 
+      <ion-row>
+        <ion-col text-center>
+          <ion-button  (click)="onSubmit()" shape="round" color="tertiary">
+            SAVE
+          </ion-button>
+        </ion-col>
+      </ion-row>
 
     </form>
 

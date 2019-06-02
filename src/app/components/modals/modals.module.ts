@@ -11,6 +11,7 @@ import { EmojiPickerPageModule } from '../emoji-picker/emoji-picker.module';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { MapComponent } from './map/map.component';
 import { PopInfoComponent } from './pop-info/pop-info.component';
+import { PopEditComponent } from './pop-edit/pop-edit.component';
 
 
 
@@ -27,14 +28,16 @@ import { PopInfoComponent } from './pop-info/pop-info.component';
     EditProfileComponent,
     NewPostComponent,
     MapComponent,
-    PopInfoComponent
+    PopInfoComponent,
+    PopEditComponent
   ],
   exports: [
     ChatDetailsPage,
     EditProfileComponent
   ],
   entryComponents: [
-    MapComponent
+    MapComponent,
+    PopEditComponent
   ]
 })
 export class ModalsModule { }

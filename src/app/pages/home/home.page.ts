@@ -10,6 +10,7 @@ import * as Bounce from 'bounce.js';
 import { MapComponent } from 'src/app/components/modals/map/map.component';
 import { PopInfoComponent } from '../../components/modals/pop-info/pop-info.component';
 import { filter } from 'rxjs/operators';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @Component({
   selector: 'app-home',
@@ -30,6 +31,7 @@ export class HomePage {
     public toastController: ToastController,
     public alertController: AlertController,
     public popoverController: PopoverController,
+    private socialSharing: SocialSharing,
     public actionSheetController: ActionSheetController,
     private modalController: ModalController) {
     this.subscription = this.store.select('auth')
@@ -53,7 +55,7 @@ export class HomePage {
         text: 'Share',
         icon: 'share',
         handler: () => {
-          // this.shareWhatsapp(item);
+          this.shareWhatsapp(item);
         }
       },
       {
@@ -163,9 +165,20 @@ export class HomePage {
     await alert.present();
   }
 
+  public shareWhatsapp(item: any) {
+
+    this.socialSharing.share(item.description, item.img, item.img)
+      .then(() => {
+
+      }).catch((err) => {
+        console.log(err);
+      });
+  }
+
   deleteItem(item: any) {
-    this.uploadFileService.deletePost(item.uid)
-      .then();
+    console.log(item.key);
+
+    this.uploadFileService.deletePost(item);
   }
 
   async presentToast(message: string) {

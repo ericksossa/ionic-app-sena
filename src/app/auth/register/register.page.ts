@@ -37,25 +37,32 @@ export class RegisterPage implements OnInit, OnDestroy {
       { type: 'required', message: 'Email is required.' },
       { type: 'minlength', message: 'Email length must be longer or equal than 6 characters.' },
       { type: 'maxlength', message: 'Email length must be lower or equal to 50 characters.' },
-      // { type: 'required', message: 'Email is required.'},
     ],
     'password': [
       { type: 'required', message: 'Password is required.' },
       { type: 'minlength', message: 'Password length must be longer or equal than 6 characters.' },
       { type: 'maxlength', message: 'Password length must be lower or equal to 30 characters.' },
-      // { type: 'required', message: 'Email is required.'},
     ],
     'name': [
       { type: 'required', message: 'Name is required.' },
       { type: 'minlength', message: 'Name length must be longer or equal than 4 characters.' },
       { type: 'maxlength', message: 'Name length must be lower or equal to 30 characters.' },
-      // { type: 'required', message: 'Email is required.'},
+    ],
+    'phone': [
+      { type: 'required', message: 'Phone is required.' },
+      { type: 'minlength', message: 'Phone length must be longer or equal than 4 characters.' },
+      { type: 'maxlength', message: 'Phone length must be lower or equal to 18 characters.' },
+    ],
+    'location': [
+      { type: 'required', message: 'Location is required.' },
+
     ]
 
   };
   private list: string[] = [];
   public input = '';
   public countries: string[] = [];
+  countryCode: string;
   registerForm: FormGroup;
   subscription: Subscription = new Subscription();
   constructor(
@@ -119,6 +126,8 @@ export class RegisterPage implements OnInit, OnDestroy {
       ])),
       phone: new FormControl('', Validators.compose([
         Validators.required,
+        Validators.minLength(11),
+        Validators.maxLength(18),
       ])),
       location: new FormControl('', Validators.compose([
         Validators.required,
@@ -133,18 +142,19 @@ export class RegisterPage implements OnInit, OnDestroy {
     avatar.select = true;
   }
 
-  telInputObject(obj) {
-    // console.log(obj);
-    obj.setCountry('co');
-
-  }
 
   onCountryChange(e) {
-    console.log(e);
+    this.countryCode = e.dialCode;
+  }
+
+  telInputObject(e) {
+    // console.log(e);
+
   }
 
   getNumber(e) {
-    this.registerForm.value.phone = e;
+    console.log(e);
+    this.countryCode = e;
   }
 
   hasError(e) {
@@ -153,18 +163,20 @@ export class RegisterPage implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.authService.signIn(
-      this.registerForm.value.name,
-      this.registerForm.value.email,
-      this.registerForm.value.password,
-      this.registerForm.value.phone,
-      this.registerForm.value.location,
-      this.avatarSel
-    ).then(() => this.loginPage.goSignIn())
-      .catch((err) => {
-        this.store.dispatch(new DesactivateLoadingAction());
-        this.showError('Error: ' + err.message);
-      });
+    console.log(this.countryCode);
+
+    // this.authService.signIn(
+    //   this.registerForm.value.name,
+    //   this.registerForm.value.email,
+    //   this.registerForm.value.password,
+    //   this.registerForm.value.phone = this.countryCode,
+    //   this.registerForm.value.location,
+    //   this.avatarSel
+    // ).then(() => this.loginPage.goSignIn())
+    //   .catch((err) => {
+    //     this.store.dispatch(new DesactivateLoadingAction());
+    //     this.showError('Error: ' + err.message);
+    //   });
   }
 
   async showError(message: string) {

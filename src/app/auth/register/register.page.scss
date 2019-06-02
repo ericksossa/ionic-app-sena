@@ -15,9 +15,6 @@ img {
     margin: 0 auto;
 }
 
-.fab-button {
-    margin-top: -30px;
-}
 
 .pick-avatar {
     width: 80px;
@@ -27,4 +24,32 @@ img {
 .pick-avatar-select {
     transition: opacity 0.5s linear;
     opacity: 1 !important;
+}
+
+.autocomplete {
+  width: 100%;
+
+  ion-item {
+      ion-input {
+          padding: 1px !important;
+      }
+  }
+
+  ion-list {
+      position: absolute;
+      width: 95%;
+      overflow-y: scroll;
+      max-height: 150%;
+      border: 5px;
+      z-index: 999;
+
+      ion-item {
+          background: #f1f1f1;
+      }
+
+      ion-item:hover {
+          cursor: pointer;
+          background: #dddddd
+      }
+  }
 }

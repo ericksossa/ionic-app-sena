@@ -158,8 +158,9 @@ export class UploadFileService {
     this.images.push(post);
   }
 
-  deletePost(uid: string) {
-    return this.afDB.doc(`${this.authService.getUsuario().uid}/post/items/${uid}`)
+  deletePost(item: any) {
+    this.afDB.doc(`${this.authService.getUsuario().uid}/post/items/${item.uid}`)
       .delete();
+    this.angularDataBase.list(`/post/${item.key}`).remove();
   }
 }
