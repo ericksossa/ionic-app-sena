@@ -5,6 +5,9 @@ export class User {
     public location: string;
     public avatar: string;
     public uid: string;
+    public description: string;
+    public gender: string;
+    public languages: string;
 
     constructor(obj: DataObj) {
         this.name = obj && obj.name || null;

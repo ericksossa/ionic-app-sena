@@ -165,18 +165,18 @@ export class RegisterPage implements OnInit, OnDestroy {
   onSubmit() {
     console.log(this.countryCode);
 
-    // this.authService.signIn(
-    //   this.registerForm.value.name,
-    //   this.registerForm.value.email,
-    //   this.registerForm.value.password,
-    //   this.registerForm.value.phone = this.countryCode,
-    //   this.registerForm.value.location,
-    //   this.avatarSel
-    // ).then(() => this.loginPage.goSignIn())
-    //   .catch((err) => {
-    //     this.store.dispatch(new DesactivateLoadingAction());
-    //     this.showError('Error: ' + err.message);
-    //   });
+    this.authService.signIn(
+      this.registerForm.value.name,
+      this.registerForm.value.email,
+      this.registerForm.value.password,
+      this.registerForm.value.phone = this.countryCode,
+      this.registerForm.value.location,
+      this.avatarSel
+    ).then(() => this.loginPage.goSignIn())
+      .catch((err) => {
+        this.store.dispatch(new DesactivateLoadingAction());
+        this.showError('Error: ' + err.message);
+      });
   }
 
   async showError(message: string) {

@@ -66,6 +66,9 @@ export class AuthService {
           location: location,
           avatar: avatar,
           uid: resp.user.uid,
+          description: '',
+          gender: '',
+          languages: ''
         };
         this.afDB.doc(`${user.uid}/user`)
           .set(user)

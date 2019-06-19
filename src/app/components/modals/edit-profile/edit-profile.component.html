@@ -21,7 +21,7 @@
     <ion-row>
       <!-- <ion-col></ion-col> -->
       <ion-col text-center>
-        <img class="pick-avatar" [src]="imagePreview">
+        <img class="pick-avatar" [src]="userAvatar">
         <ion-fab-button text-center (click)="selectAvatar($event)" class="fab-button" color="dark">
           <ion-icon name="camera"></ion-icon>
         </ion-fab-button>
@@ -30,32 +30,48 @@
 
 
 
-    <form>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)">
       <ion-row>
         <ion-col>
           <ion-list>
             <ion-item>
               <ion-label position="floating">Name</ion-label>
-              <ion-input type="text" name="name"></ion-input>
+              <ion-input [(ngModel)]="dataUser.user.name" type="text" name="name"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label position="floating">Location</ion-label>
-              <ion-input type="text" name="location"></ion-input>
+              <ion-input [(ngModel)]="dataUser.user.location" type="text" name="location"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Languages</ion-label>
+              <ion-select [(ngModel)]="dataUser.user.languages" name="languages" multiple="true" cancelText="Nah" okText="Okay!">
+                <ion-select-option value="arabic">Arabic</ion-select-option>
+                <ion-select-option value="chinese">Chinese</ion-select-option>
+                <ion-select-option value="english">English</ion-select-option>
+                <ion-select-option value="french">French</ion-select-option>
+                <ion-select-option value="german">German</ion-select-option>
+                <ion-select-option value="italian">Italian</ion-select-option>
+                <ion-select-option value="japanese">Japanese</ion-select-option>
+                <ion-select-option value="portuguese">Portuguese</ion-select-option>
+                <ion-select-option value="russian">Russian</ion-select-option>
+                <ion-select-option value="spanish">Spanish</ion-select-option>
+              </ion-select>
             </ion-item>
 
             <ion-item>
               <ion-label position="floating">Description</ion-label>
-              <ion-textarea rows="2" cols="10"></ion-textarea>
+              <ion-textarea [(ngModel)]="dataUser.user.description"  name="description" rows="2" cols="10"></ion-textarea>
             </ion-item>
-            
+
             <ion-item>
               <ion-label position="floating">Phone</ion-label>
-              <ion-input type="text" name="phone"></ion-input>
+              <ion-input [(ngModel)]="dataUser.user.phone" type="text" name="phone"></ion-input>
             </ion-item>
 
             <ion-item>
               <ion-label>Gender</ion-label>
-              <ion-select placeholder="Select One">
+              <ion-select [(ngModel)]="dataUser.user.gender" name="gender" placeholder="Select One">
                 <ion-select-option value="f">Female</ion-select-option>
                 <ion-select-option value="m">Male</ion-select-option>
               </ion-select>
@@ -69,7 +85,7 @@
 
       <ion-row>
         <ion-col text-center>
-          <ion-button  (click)="onSubmit()" shape="round" color="tertiary">
+          <ion-button type="submit" shape="round" color="tertiary">
             SAVE
           </ion-button>
         </ion-col>

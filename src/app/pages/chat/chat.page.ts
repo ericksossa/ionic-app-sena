@@ -14,9 +14,8 @@ export class ChatPage {
   async openChat(name: any) {
     const modal = await this.modalController.create({
       component: ChatDetailsPage,
-      componentProps: { name: name }
+      componentProps: { user: name }
     });
     return await modal.present();
-
   }
 }

@@ -17,7 +17,8 @@
       </ion-col>
       <ion-col size="7">
         <h1>{{userName}}</h1>
-        <ion-button color="tertiary" (click)="editProfile()">Edit profile</ion-button>
+        <ion-button color="tertiary" (click)="editProfile()"><ion-badge color="danger">
+          <ion-icon name="information-circle-outline"></ion-icon></ion-badge> Edit profile</ion-button>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -28,7 +29,7 @@
       </ion-col>
       <ion-col size="12">
         <ion-icon name="chatboxes" color="medium"></ion-icon>
-        <ion-label color="medium">Speaks</ion-label>
+        <ion-label color="medium">Languages</ion-label>
         <b> {{'Spanish,English'}}</b>
       </ion-col>
       <ion-col size="12">

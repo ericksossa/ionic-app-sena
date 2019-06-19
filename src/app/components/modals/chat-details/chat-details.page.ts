@@ -1,6 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ModalController, NavParams, IonContent } from '@ionic/angular';
 import { ChatService } from 'src/app/services/chat/chat.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../app.reducer';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 
 @Component({
@@ -15,14 +19,27 @@ export class ChatDetailsPage implements OnInit {
   editorMsg: any = '';
   msgList: any[] = [];
   name: string;
+  auth: any;
   user: any;
+  subscription: Subscription;
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
-    private chatService: ChatService) { }
+    private chatService: ChatService,
+    private store: Store<AppState>) {
+    this.subscription = this.store.select('auth')
+      .pipe(filter(auth => auth.user != null))
+      .subscribe(auth => {
+        this.auth = auth;
+        console.log(this.auth);
+
+      });
+  }
 
   ngOnInit() {
-    this.name = this.navParams.get('name');
+    this.user = this.navParams.get('user');
+    console.log(this.user);
+
   }
 
   switchEmojiPicker() {

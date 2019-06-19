@@ -96,13 +96,11 @@ export class HomePage {
       });
   }
 
-  async presentPopover(ev: any) {
-    console.log(ev);
-
+  async presentPopover(ev: any, value: any) {
     const popover = await this.popoverController.create({
       component: PopInfoComponent,
+      componentProps: {user: value},
       event: ev,
-      // translucent: true,
       mode: 'ios'
     });
     return await popover.present();

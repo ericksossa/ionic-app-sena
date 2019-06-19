@@ -24,7 +24,7 @@
     <ion-col size="12" size-lg="3" size-md="4" size-sm="6" *ngFor="let post of items ">
       <ion-card>
         <ion-item>
-          <ion-chip (click)="presentPopover($event)" slot="start" color="primary">
+          <ion-chip (click)="presentPopover($event, post)" slot="start" color="primary">
             <ion-avatar>
               <img src="../../assets/inicio/{{post.userAvatar}}">
             </ion-avatar>
