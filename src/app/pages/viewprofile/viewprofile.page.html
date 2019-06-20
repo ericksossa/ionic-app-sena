@@ -1,0 +1,113 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="secondary">
+      <ion-button (click)="onLogout()">
+        <ion-icon name="exit"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col>
+        <img *ngIf="avatar" class="pic_profile" src="../../assets/inicio/{{avatar}}">
+      </ion-col>
+      <ion-col size="7">
+        <h1>{{userName}}</h1>
+        <ion-button color="tertiary" (click)="editProfile()"><ion-badge color="danger">
+          <ion-icon name="information-circle-outline"></ion-icon></ion-badge> Edit profile</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-icon name="pin" color="medium"></ion-icon>
+        <ion-label color="medium">From</ion-label>
+        <b> {{location}}</b>
+      </ion-col>
+      <ion-col size="12">
+        <ion-icon name="chatboxes" color="medium"></ion-icon>
+        <ion-label color="medium">Languages</ion-label>
+        <b> {{'Spanish,English'}}</b>
+      </ion-col>
+      <ion-col size="12">
+        <h3><b> My Description </b> </h3>
+      </ion-col>
+      <ion-col size="12">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+      </ion-col>
+      <ion-col>
+        <ion-item mode="ios" lines="full">
+          <ion-button expand="full" slot="end" shape="round" fill="outline" color="success" (click)="newPost()">
+            Add to activity
+          </ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- segment -->
+  <ion-segment (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="grid">
+      <ion-icon name="grid"></ion-icon>
+      <ion-label>Grid</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="list">
+      <ion-icon name="list"></ion-icon>
+      <ion-label>List</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <!-- /segment -->
+  <!-- galeria -->
+  <div [ngSwitch]="galleryType">
+    <ion-grid *ngSwitchCase="'grid'">
+      <ion-row>
+        <ion-col size="6" size-md="4" size-xl="3" *ngFor="let post of items ">
+          <div class="image-container">
+            <ion-img [src]="post.img"></ion-img>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div *ngSwitchCase="'list'">
+      <ion-card *ngFor="let post of items ">
+        <ion-item>
+          <ion-chip slot="start" color="primary">
+            <ion-avatar>
+              <img src="../../assets/inicio/{{post.userAvatar}}">
+            </ion-avatar>
+            <ion-label>
+              <b>{{post.user}} </b>
+              <p><small>
+                  {{post.createAt | date}}
+                </small></p>
+            </ion-label>
+          </ion-chip>
+          <ion-note slot="end">
+            {{post.createAt | relativeTime }}
+          </ion-note>
+        </ion-item>
+        <img [src]="post.img">
+        <ion-card-content>
+          <p>{{post.description | titlecase}}</p>
+        </ion-card-content>
+        <ion-item>
+          <ion-button (click)="openMap(post.coords)" fill="clear" size="small">
+            <ion-icon name="pin"></ion-icon>
+          </ion-button>
+          <ion-button #bouncebtn (click)="likePost()" slot="end" fill="clear" size="small">
+            <ion-icon [name]="start"></ion-icon>
+            <p *ngIf="likes > 0">{{likes}}</p>
+          </ion-button>
+
+          <ion-button slot="end" fill="clear" (click)="presentActionSheet(post)">
+            <ion-icon name="ios-more"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-card>
+    </div>
+  </div>
+  <!-- /galeria -->
+</ion-content>
