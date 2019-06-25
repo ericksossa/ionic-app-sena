@@ -11,7 +11,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [scrollEvents]="true" appAutoHide>
+<ion-content  color="home" [scrollEvents]="true" appAutoHide>
   <!-- refrescar contenido -->
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
@@ -67,7 +67,7 @@
 
   <!-- botón de fab -->
   <ion-fab  vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button  color="tertiary" (click)="newPost()">
+    <ion-fab-button  color="button" (click)="newPost()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

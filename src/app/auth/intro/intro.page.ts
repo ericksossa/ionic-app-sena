@@ -9,8 +9,8 @@ export class IntroPage implements OnInit {
   slide: any = [
     {
       video: '../../../assets/inicio/trip.mp4',
-      title: 'Welcome to awesome app',
-      content: 'Each of us has a way of traveling. <br>Every sees the word in a special and unique way. '
+      title: 'Hi! where are we going today?',
+      content: 'Each of us has a way of traveling. <br>We all see the word in a unique and special way. '
     }
   ];
   constructor() { }
