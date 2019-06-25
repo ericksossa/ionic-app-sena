@@ -9,7 +9,9 @@ const routes: Routes = [
   {
     path: '', loadChildren: './pages/tabs/tabs.module#TabsPageModule',
     canActivate: [AuthGuard]
-  }, // <--importante
+  },   
+ 
+// <--importante
 
 
 ];
