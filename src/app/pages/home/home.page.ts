@@ -183,6 +183,7 @@ export class HomePage {
     const toast = await this.toastController.create({
       message: message,
       duration: 2000,
+      color: "light"
     });
     toast.present();
   }
