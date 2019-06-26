@@ -6,4 +6,5 @@ export interface UploadFile {
     coords?: string;
     key?: string;
     createAt?: string;
+    uid?: string;
 }

@@ -6,12 +6,10 @@ const routes: Routes = [
   { path: 'intro', loadChildren: './auth/intro/intro.module#IntroPageModule' },
   { path: 'login', loadChildren: './auth/login/login.module#LoginPageModule' },
   { path: '', redirectTo: 'intro', pathMatch: 'full' },
-  {
-    path: '', loadChildren: './pages/tabs/tabs.module#TabsPageModule',
-    canActivate: [AuthGuard]
-  },   
- 
-// <--importante
+  { path: '', loadChildren: './pages/tabs/tabs.module#TabsPageModule',
+    canActivate: [AuthGuard] },  // <--importante
+
+
 
 
 ];

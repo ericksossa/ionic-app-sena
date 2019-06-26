@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="secondary">
-      <ion-button (click)="onLogout()">
-        <ion-icon name="exit"></ion-icon>
+      <ion-button (click)="logout()">
+        <ion-icon name="menu"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>
@@ -11,7 +11,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content  color="home" [scrollEvents]="true" appAutoHide>
+<ion-content color="home" [scrollEvents]="true" appAutoHide>
   <!-- refrescar contenido -->
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
@@ -40,7 +40,7 @@
           </ion-note>
         </ion-item>
         <img [src]="post.img">
-        <ion-card-content>
+        <ion-card-content >
           <p>{{post.description | titlecase}}</p>
         </ion-card-content>
         <ion-item>

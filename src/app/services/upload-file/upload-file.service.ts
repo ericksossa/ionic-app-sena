@@ -40,14 +40,13 @@ export class UploadFileService {
 
   }
 
-
   uploadImageFirebase(file: UploadFile) {
-
     let promise = new Promise((resolve, reject) => {
 
       const storeRef = firebase.storage().ref();
       const fileName: string = new Date().valueOf().toString();
 
+      // sube el archivo de img al storage
       let uploadTask: firebase.storage.UploadTask =
         storeRef.child(`img/${fileName}`)
           .putString(file.img, 'base64', { contentType: 'image/jpeg' });
@@ -128,13 +127,13 @@ export class UploadFileService {
           })
         ).subscribe((coleccion: any[]) => {
           this.store.dispatch(new SetItemsAction(coleccion));
-          // this.images.push(coleccion);
           resolve(true);
         });
     });
   }
 
   cancelSubs() {
+    this.subscription.unsubscribe();
     this.itemsListenerSubcription.unsubscribe();
     this.postItemsSubcription.unsubscribe();
     this.store.dispatch(new UnsetItemsAction());
@@ -143,23 +142,24 @@ export class UploadFileService {
   private createPost(description: string, url: string, fileName: string, coords?: string) {
 
     let post: UploadFile = {
-      userAvatar: this.authService.getUsuario().avatar,
+      userAvatar: this.authService.getUser().avatar,
       description: description,
       img: url,
       user: this.userName,
       coords: coords,
       key: fileName,
       createAt: new Date().toString(),
+      uid: this.authService.getUser().uid,
     };
 
-    this.afDB.doc(`${this.authService.getUsuario().uid}/post`)
+    this.afDB.doc(`${this.authService.getUser().uid}/post`)
       .collection('items').add({ ...post });
     this.angularDataBase.object(`/post/${fileName}`).update(post);
     this.images.push(post);
   }
 
   deletePost(item: any) {
-    this.afDB.doc(`${this.authService.getUsuario().uid}/post/items/${item.uid}`)
+    this.afDB.doc(`${this.authService.getUser().uid}/post/items/${item.uid}`)
       .delete();
     this.angularDataBase.list(`/post/${item.key}`).remove();
   }

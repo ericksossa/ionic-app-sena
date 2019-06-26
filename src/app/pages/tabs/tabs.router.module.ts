@@ -35,6 +35,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'viewprofile/:value',
+        children: [
+          {
+            path: '',
+            loadChildren: '../viewprofile/viewprofile.module#ViewprofilePageModule'
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'

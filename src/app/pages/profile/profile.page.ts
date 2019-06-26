@@ -27,9 +27,11 @@ export class ProfilePage implements OnInit, OnDestroy {
   galleryType = 'grid';
   start = 'star-outline';
   likes: number = 0; // TODO
+  userAvatar: any;
   userName: string;
   location: string;
-  avatar: string;
+  languages: string;
+  description: string;
   items: any[] = [];
   subscription: Subscription;
   constructor(
@@ -52,7 +54,9 @@ export class ProfilePage implements OnInit, OnDestroy {
       .subscribe(auth => {
         this.userName = auth.user.name;
         this.location = auth.user.location;
-        this.avatar = auth.user.avatar;
+        this.languages = auth.user.languages;
+        this.description = auth.user.description;
+        this.verifyAvatar(auth.user.avatar);
       });
     // valor por defecto del IonSegment
     this.segment.value = 'grid';
@@ -60,6 +64,16 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  verifyAvatar(img: string) {
+
+    if (img.indexOf('av') > -1) {
+      this.userAvatar = 'assets/inicio/' + img;
+    } else {
+      this.userAvatar = img;
+    }
+
   }
 
   segmentChanged(e) {
@@ -74,6 +88,17 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   async openMap(coords: string) {
+    if (!coords) {
+      const alert = await this.alertController.create({
+        header:   `I'm sorry`,
+        message: `Apparently there's no map to show.`,
+        buttons: ['OK'],
+        mode: 'ios'
+      });
+      await alert.present();
+      return;
+    }
+
     const modal = await this.modalController.create({
       component: MapComponent,
       componentProps: { coords: coords }
@@ -174,8 +199,35 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.uploadService.deletePost(item);
   }
 
+
   onLogout() {
     this.authService.logout();
     this.uploadService.cancelSubs();
   }
+
+  async logout() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Log Out of GTrip?',
+      mode: 'ios',
+      buttons: [{
+        text: 'Log Out',
+        role: 'destructive',
+        icon: 'exit',
+        handler: () => {
+          this.onLogout();
+        }
+      },
+      {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
+
 }

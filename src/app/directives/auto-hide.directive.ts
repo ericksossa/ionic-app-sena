@@ -28,11 +28,11 @@ export class AutoHideDirective implements OnInit {
     let htmlEle: HTMLElement = this.elementRef.nativeElement;
     let fab = htmlEle.querySelector('ion-fab-button');
     if (e.detail.scrollTop - this.oldScrollTop > 10) {
-      this.renderer.setElementStyle(this.fabToHide, 'opacity', '0');
+      this.renderer.setElementStyle(this.fabToHide, 'z-index', '-1');
       this.renderer.setElementStyle(this.fabToHide, 'webkitTransition', 'scaled3d(.1,.1,.1)');
       fab.disabled = true;
     } else if (e.detail.scrollTop - this.oldScrollTop < 0) {
-      this.renderer.setElementStyle(this.fabToHide, 'opacity', '1');
+      this.renderer.setElementStyle(this.fabToHide, 'z-index', '1');
       this.renderer.setElementStyle(this.fabToHide, 'webkitTransition', 'scaled3d(1,1,1)');
       fab.disabled = false;
     }

@@ -1,5 +1,5 @@
 <ion-content>
-  <gl-background-video [src]="slide[0].video"></gl-background-video>
+  <gl-background-video [src]="slide[0].video" poster="assets/inicio/intro.jpg"></gl-background-video>
   <div class="page-centered-element" *ngFor="let item of slide">
     <div class="content">
       <h1> <b> {{item.title | uppercase}} </b> </h1>

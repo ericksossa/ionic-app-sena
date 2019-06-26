@@ -14,8 +14,11 @@ export class User {
         this.uid = obj && obj.uid || null;
         this.email = obj && obj.email || null;
         this.phone = obj && obj.phone || null;
-        this.location = obj && obj.location || null;
         this.avatar = obj && obj.avatar || null;
+        this.location = obj && obj.location || null;
+        this.description = obj && obj.description || null;
+        this.gender = obj && obj.gender || null;
+        this.languages = obj && obj.languages || null;
     }
 }
 
@@ -26,4 +29,7 @@ interface DataObj {
     phone: string;
     location: string;
     avatar: string;
+    description: string;
+    gender: string;
+    languages: string;
 }

@@ -21,7 +21,6 @@ export function uploadFileReducer(state = initState, action: fromUploadFile.acci
                     })
                 ]
             };
-
         case fromUploadFile.UNSET_ITEMS:
             return { items: [] };
 

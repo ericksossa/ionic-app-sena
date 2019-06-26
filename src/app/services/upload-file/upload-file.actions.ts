@@ -10,6 +10,7 @@ export class SetItemsAction implements Action {
     constructor(public items: UploadFile[]) { }
 }
 
+
 export class UnsetItemsAction implements Action {
     readonly type = UNSET_ITEMS;
 }

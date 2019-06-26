@@ -20,7 +20,9 @@ export class ChatDetailsPage implements OnInit {
   msgList: any[] = [];
   name: string;
   auth: any;
-  user: any;
+  chat: any;
+  toUserId: string;
+  userAvatar: any;
   subscription: Subscription;
   constructor(
     private modalController: ModalController,
@@ -30,16 +32,34 @@ export class ChatDetailsPage implements OnInit {
     this.subscription = this.store.select('auth')
       .pipe(filter(auth => auth.user != null))
       .subscribe(auth => {
-        this.auth = auth;
+        this.auth = auth.user;
         console.log(this.auth);
-
       });
+    this.verifyAvatar(this.auth.avatar);
   }
 
   ngOnInit() {
-    this.user = this.navParams.get('user');
-    console.log(this.user);
+    this.chat = this.navParams.get('chat');
+    this.toUserId = this.chat.uid;
+    this.getChat();
+    console.log(this.chat);
+  }
 
+  verifyAvatar(img: string) {
+    if (img.indexOf('av') > -1) {
+      this.userAvatar = 'assets/inicio/' + img;
+    } else {
+      this.userAvatar = img;
+    }
+
+  }
+
+  getChat() {
+    this.chatService.get(this.toUserId)
+      .subscribe((data: any) => {
+        this.msgList = data.messages;
+        console.log(this.msgList);
+      });
   }
 
   switchEmojiPicker() {
@@ -67,21 +87,18 @@ export class ChatDetailsPage implements OnInit {
   sendMsg() {
     if (!this.editorMsg.trim()) { return; }
     // Mock message
-    const id = Date.now().toString();
-    let newMsg: any = {
+    const newMsg: any = {
       // messageId: Date.now().toString(),
-      // userId: this.user.id,
-      // userName: this.user.name,
-      // userAvatar: this.user.avatar,
-      // toUserId: this.toUser.id,
+      userId: this.auth.uid,
+      toUserId: this.toUserId,
+      userName: this.auth.name,
       time: Date.now(),
-      message: this.editorMsg,
-      status: ''
+      messages: this.editorMsg,
     };
 
-    this.msgList.push(newMsg);
-    console.log(this.msgList);
+    // this.msgList.push(newMsg);
     this.editorMsg = '';
+    this.chatService.sendMsgToFirebase(newMsg, this.toUserId);
   }
 
   scrollToBottom() {

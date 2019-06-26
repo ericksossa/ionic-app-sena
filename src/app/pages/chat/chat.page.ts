@@ -8,13 +8,13 @@ import { ChatDetailsPage } from 'src/app/components/modals/chat-details/chat-det
   styleUrls: ['chat.page.scss']
 })
 export class ChatPage {
-  name = 'test';
+  chat: any;
   constructor(private modalController: ModalController) { }
 
-  async openChat(name: any) {
+  async openChat() {
     const modal = await this.modalController.create({
       component: ChatDetailsPage,
-      componentProps: { user: name }
+      componentProps: this.chat
     });
     return await modal.present();
   }

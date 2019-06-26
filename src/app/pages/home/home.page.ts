@@ -40,6 +40,7 @@ export class HomePage {
     this.items = this.uploadFileService.images;
   }
 
+
   async presentActionSheet(item: any) {
     const actionSheet = await this.actionSheetController.create({
       header: 'Options',
@@ -99,7 +100,7 @@ export class HomePage {
   async presentPopover(ev: any, value: any) {
     const popover = await this.popoverController.create({
       component: PopInfoComponent,
-      componentProps: {user: value},
+      componentProps: { user: value },
       event: ev,
       mode: 'ios'
     });
@@ -122,6 +123,17 @@ export class HomePage {
   }
 
   async openMap(coords: string) {
+    if (!coords) {
+      const alert = await this.alertController.create({
+        header:   `I'm sorry`,
+        message: `Apparently there's no map to show.`,
+        buttons: ['OK'],
+        mode: 'ios'
+      });
+      await alert.present();
+      return;
+    }
+
     const modal = await this.modalController.create({
       component: MapComponent,
       componentProps: { coords: coords }
@@ -165,7 +177,7 @@ export class HomePage {
 
   public shareWhatsapp(item: any) {
 
-    this.socialSharing.share(item.description, item.img, item.img)
+    this.socialSharing.share(item.description, null, item.img, item.img)
       .then(() => {
 
       }).catch((err) => {
@@ -190,5 +202,29 @@ export class HomePage {
   onLogout() {
     this.authService.logout();
     this.uploadFileService.cancelSubs();
+  }
+
+  async logout() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Log Out of GTrip?',
+      mode: 'ios',
+      buttons: [{
+        text: 'Log Out',
+        role: 'destructive',
+        icon: 'exit',
+        handler: () => {
+          this.onLogout();
+        }
+      },
+      {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
   }
 }
