@@ -177,7 +177,7 @@ export class HomePage {
 
   public shareWhatsapp(item: any) {
 
-    this.socialSharing.share(item.description, null, item.img, item.img)
+    this.socialSharing.shareViaWhatsApp(item.description, item.img, item.img)
       .then(() => {
 
       }).catch((err) => {
@@ -195,6 +195,7 @@ export class HomePage {
     const toast = await this.toastController.create({
       message: message,
       duration: 2000,
+      color: "light"
     });
     toast.present();
   }

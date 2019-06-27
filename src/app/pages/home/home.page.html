@@ -29,7 +29,7 @@
               <img src="../../assets/inicio/{{post.userAvatar}}">
             </ion-avatar>
             <ion-label>
-              <b>{{post.user}} </b>
+              <b class="font">{{post.user}} </b>
               <p><small>
                   {{post.createAt | date}}
                 </small></p>
@@ -40,7 +40,7 @@
           </ion-note>
         </ion-item>
         <img [src]="post.img">
-        <ion-card-content >
+        <ion-card-content class="colorCard">
           <p>{{post.description | titlecase}}</p>
         </ion-card-content>
         <ion-item>

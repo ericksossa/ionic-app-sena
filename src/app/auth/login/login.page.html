@@ -5,7 +5,10 @@
       <div id="background"></div>
       <div id="wrapper"></div>
       <form [formGroup]="loginForm">
-        <ion-grid>
+        <ion-grid>          
+          <ion-col>
+              <img class="top" src="assets/img/witheB.PNG"/>
+          </ion-col>
           <ion-row>
             <ion-col>
               <ion-item>
@@ -47,7 +50,7 @@
 
           <ion-row>
             <ion-col>
-              <ion-button (click)="onSubmit()" type="submit" color="tertiary" shape="round">
+              <ion-button class="margin" (click)="onSubmit()" type="submit" color="login" shape="round">
                 Login
               </ion-button>
             </ion-col>
@@ -58,10 +61,10 @@
               <p>
                 Sign in With Social Account
               </p>
-              <ion-button color="facebook" (click)="signInWithFacebook()">
+              <ion-button size="small" color="facebook" (click)="signInWithFacebook()">
                 <ion-icon name="logo-facebook"></ion-icon>
               </ion-button>
-              <ion-button color="google" (click)="signInGoogle()">
+              <ion-button size="small" color="google" (click)="signInGoogle()">
                 <ion-icon name="logo-googleplus"></ion-icon>
               </ion-button>
               <!-- /buttons -->
@@ -87,13 +90,13 @@
   <ion-toolbar>
     <ion-row>
       <ion-col>
-        <ion-button (click)="goSignIn()" shape="round" expand="full" size="small" fill="outline" color="primary">
+        <ion-button (click)="goSignIn()" shape="round" expand="full" size="small" fill="outline" color="login">
           SIGN IN
         </ion-button>
       </ion-col>
 
       <ion-col>
-        <ion-button (click)="goSignUp()" shape="round" expand="full" size="small" fill="outline" color="primary">
+        <ion-button (click)="goSignUp()" shape="round" expand="full" size="small" fill="outline" color="login">
           SIGN UP
         </ion-button>
       </ion-col>

@@ -103,7 +103,7 @@
        <!-- /inputs -->
        <ion-row>
          <ion-col>
-           <ion-button [disabled]="!registerForm.valid" (click)="onSubmit()" shape="round" color="primary">
+           <ion-button [disabled]="!registerForm.valid" (click)="onSubmit()" shape="round" color="login">
              REGISTER
            </ion-button>
          </ion-col>
@@ -114,13 +114,13 @@
      <ion-row>
        <ion-col class="top-5">
          <!-- buttons -->
-         <p>
+         <p style="font-size: smaller">
            Sign in With Social Account
          </p>
-         <ion-button color="facebook">
+         <ion-button size="small" color="facebook">
            <ion-icon name="logo-facebook"></ion-icon>
          </ion-button>
-         <ion-button color="google">
+         <ion-button size="small" color="google">
            <ion-icon name="logo-googleplus"></ion-icon>
          </ion-button>
          <!-- /buttons -->
