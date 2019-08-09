@@ -11,7 +11,7 @@ import { UsersService } from '../../services/users/users.service';
   styleUrls: ['./viewprofile.page.scss'],
 })
 export class ViewprofilePage implements OnInit {
-  @ViewChild(IonSegment) segment: IonSegment;
+  @ViewChild(IonSegment, { static: true }) segment: IonSegment;
   args: any;
   galleryType = 'grid';
   start = 'star-outline';

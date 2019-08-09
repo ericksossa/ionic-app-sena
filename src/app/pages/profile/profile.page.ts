@@ -22,7 +22,7 @@ import { MapComponent } from 'src/app/components/modals/map/map.component';
   styleUrls: ['profile.page.scss']
 })
 export class ProfilePage implements OnInit, OnDestroy {
-  @ViewChild(IonSegment) segment: IonSegment;
+  @ViewChild(IonSegment, { static: true }) segment: IonSegment;
   @ViewChildren('bouncebtn', { read: ElementRef }) bouncebtn: QueryList<ElementRef>;
   galleryType = 'grid';
   start = 'star-outline';

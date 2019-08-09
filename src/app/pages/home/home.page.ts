@@ -18,7 +18,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
   styleUrls: ['home.page.scss']
 })
 export class HomePage {
-  @ViewChild('bouncebtn', { read: ElementRef }) bouncebtn: ElementRef;
+  @ViewChild('bouncebtn', { read: ElementRef, static: false }) bouncebtn: ElementRef;
   start = 'star-outline';
   items: any[] = [];
   auth: any;

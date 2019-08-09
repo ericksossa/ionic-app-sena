@@ -8,7 +8,7 @@ import { AppState } from 'src/app/app.reducer';
 import { ActivateLoadingAction, DesactivateLoadingAction } from '../../auth/ui.actions';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { UnSetUserAction, SetUserAction } from 'src/app/auth/auth.actions';
+import { unSetUserAction, setUserAction } from 'src/app/auth/auth.actions';
 import { Subscription } from 'rxjs';
 
 @Injectable({
@@ -30,7 +30,7 @@ export class AuthService {
           this.afDB.doc(`${fbuser.uid}/user`)
             .valueChanges().subscribe((usuarioObj: any) => {
               const newUser = new User(usuarioObj);
-              this.store.dispatch(new SetUserAction(newUser));
+              this.store.dispatch(setUserAction(newUser));
               this._user = newUser;
             });
         } else {
@@ -81,7 +81,7 @@ export class AuthService {
       .then(() => {
         this._user = null;
         this.router.navigate(['/login']);
-        this.store.dispatch(new UnSetUserAction());
+        this.store.dispatch( unSetUserAction());
       }).catch(err => console.log(err));
   }
 

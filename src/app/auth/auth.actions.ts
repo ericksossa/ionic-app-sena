@@ -1,19 +1,27 @@
-import { Action } from '@ngrx/store';
+import { createAction, props} from '@ngrx/store';
 import { User } from './user.model';
 
 
-export const SET_USER = '[Auth] Set User';
-export const UNSET_USER = '[Auth] UnSet User';
 
-export class SetUserAction implements Action {
-    readonly type = SET_USER;
-    constructor(public user: User) { }
-}
+export const setUserAction = createAction(
+    '[Auth] Set User',
+    props<{user: User}>()
+);
 
-export class UnSetUserAction implements Action {
-    readonly type = UNSET_USER;
-}
+export const unSetUserAction = createAction(
+    '[Auth] UnSet User'
+);
 
 
-export type acciones = SetUserAction |
-                        UnSetUserAction;
+// export class SetUserAction implements Action {
+//     readonly type = SET_USER;
+//     constructor(public user: User) { }
+// }
+
+// export class UnSetUserAction implements Action {
+//     readonly type = UNSET_USER;
+// }
+
+
+// export type acciones = SetUserAction |
+//                         UnSetUserAction;

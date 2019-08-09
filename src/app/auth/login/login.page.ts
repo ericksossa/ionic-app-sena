@@ -18,7 +18,7 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit, OnDestroy {
-  @ViewChild('slideMain') slides: IonSlides;
+  @ViewChild('slideMain', { static: true }) slides: IonSlides;
   errorMessages = {
     'email': [
       { type: 'required', message: 'Email is required.' },

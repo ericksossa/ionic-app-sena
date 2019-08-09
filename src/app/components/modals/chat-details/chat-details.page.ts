@@ -13,8 +13,8 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./chat-details.page.scss'],
 })
 export class ChatDetailsPage implements OnInit {
-  @ViewChild(IonContent) content: IonContent;
-  @ViewChild('chat_input') messageInput: ElementRef;
+  @ViewChild(IonContent, { static: true }) content: IonContent;
+  @ViewChild('chat_input', { static: true }) messageInput: ElementRef;
   showEmojiPicker = false;
   editorMsg: any = '';
   msgList: any[] = [];
